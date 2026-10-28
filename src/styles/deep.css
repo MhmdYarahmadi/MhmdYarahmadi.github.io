@@ -1822,3 +1822,15 @@ body.deep {
 		translate: none;
 	}
 }
+
+/* Phones have no sticky nav (Nav.astro), so jumps land flush. */
+@media (max-width: 760px) {
+	.d-hero,
+	.d-detail,
+	.d-next,
+	.d-doors,
+	.d-dive,
+	.d-plain .j-section {
+		scroll-margin-top: 0;
+	}
+}

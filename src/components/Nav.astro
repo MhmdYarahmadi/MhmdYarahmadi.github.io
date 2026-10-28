@@ -180,6 +180,14 @@ const links = [
 		}
 	}
 
+	/* Phones: no header at all, it covered too much of a small screen.
+	   The footer carries the same links. */
+	@media (max-width: 760px) {
+		.nav {
+			display: none;
+		}
+	}
+
 	/* Stacked worlds scroll under the nav, so it needs a background. */
 	@media (max-width: 900px) {
 		.nav--journey {
