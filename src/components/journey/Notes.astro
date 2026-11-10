@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectDetail from "../ProjectDetail.astro";
+
+// A world's write-ups, right after its scene and on its background: the
+// same blocks /projects/ shows, in place of the old Read more modals.
+// journey.ts treats it as a chapter of that world (data-world), so the
+// backdrop and header colours stay put while it scrolls by.
+interface Props {
+	// the scene's id; the notes are #<scene>-notes
+	scene: string;
+	world: string;
+	chapter: string;
+	label: string;
+	projects: CollectionEntry<"projects">[];
+	// heading for a world with a single write-up
+	title?: string;
+}
+
+const { scene, world, chapter, label, projects, title } = Astro.props;
+---
+
+<section
+	class={`j-notes j-notes--${world}`}
+	id={`${scene}-notes`}
+	data-world={world}
+	data-chapter={chapter}
+	aria-label={label}
+>
+	<div class="j-notes__inner">
+		{projects.map((p) => <ProjectDetail project={p} title={projects.length === 1 ? title : undefined} />)}
+		<slot />
+	</div>
+</section>

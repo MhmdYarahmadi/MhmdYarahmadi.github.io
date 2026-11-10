@@ -1,10 +1,10 @@
 ---
-// Each build opens its project modal; the camera and sous vide ones carry
-// their live demos.
+// Each build links to its write-up below the world (Notes.astro); the camera
+// and sous vide ones carry their live demos.
 const builds = [
-	["backup-power-camera", "ESP32-CAM wireless camera", "A wireless camera that keeps recording through a power cut, with battery backup and a SIM uplink.", "Open details + live diagram"],
-	["sous-vide", "Sous vide controller", "A personal project: a temperature controller for sous vide cooking.", "Open details + live demo"],
-	["ac-remote", "Smart AC remote", "An ESP32-based smart remote for the air conditioner.", "Open details"],
+	["backup-power-camera", "ESP32-CAM wireless camera", "A wireless camera that keeps recording through a power cut, with battery backup and a SIM uplink.", "Details + live diagram ↓"],
+	["sous-vide", "Sous vide controller", "A personal project: a temperature controller for sous vide cooking.", "Details + live demo ↓"],
+	["ac-remote", "Smart AC remote", "An ESP32-based smart remote for the air conditioner.", "Details ↓"],
 ];
 const lines: [string, boolean][] = [
 	["$ iot --list", true],
@@ -24,7 +24,7 @@ const lines: [string, boolean][] = [
 		<div class="j-copy">
 			<p class="j-tag rv">04 · Three builds</p>
 			<h2 class="rv" style="--d:60ms">&gt; IoT builds<span class="blink" aria-hidden="true">_</span></h2>
-			<p class="j-lede rv" style="--d:120ms">Small ESP32 builds for everyday problems. Open one to read more.</p>
+			<p class="j-lede rv" style="--d:120ms">Small ESP32 builds for everyday problems. Open one for a summary.</p>
 			<div class="builds rv" style="--d:180ms">
 				{
 					builds.map(([id, title, text, cta], i) => (
@@ -34,7 +34,7 @@ const lines: [string, boolean][] = [
 							</summary>
 							<div class="body">
 								<p>{text}</p>
-								<button type="button" data-open-project={id}>{cta}</button>
+								<a href={`#detail-${id}`}>{cta}</a>
 							</div>
 						</details>
 					))

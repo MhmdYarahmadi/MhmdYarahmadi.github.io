@@ -148,8 +148,9 @@ function update() {
 		root.style.setProperty("--j-bg", bg);
 		if (pill) pill.textContent = next.dataset.chapter ?? "";
 		const id = next.id;
-		// Skills has no rail entry; it belongs with About.
-		const railId = id === "skills" ? "about" : id;
+		// Skills has no rail entry; it belongs with About. A world's notes
+		// (#<world>-notes) belong with the world.
+		const railId = id === "skills" ? "about" : id.replace(/-notes$/, "");
 		for (const a of railLinks) {
 			if (a.dataset.rail === railId) a.setAttribute("aria-current", "true");
 			else a.removeAttribute("aria-current");

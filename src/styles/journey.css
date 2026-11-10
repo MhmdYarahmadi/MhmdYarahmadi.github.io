@@ -738,7 +738,9 @@ html:not(.js) .w-web { background: #eef2f6; }
 	margin: 0;
 }
 
-.builds button {
+.builds .body a {
+	display: inline-flex;
+	align-items: center;
 	min-height: 44px;
 	padding: 0 14px;
 	border: 1px solid #3b6b4c;
@@ -748,7 +750,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 	cursor: pointer;
 }
 
-.builds button:hover {
+.builds .body a:hover {
 	border-color: #a7f3c0;
 }
 
@@ -1154,6 +1156,129 @@ html:not(.js) .w-web { background: #eef2f6; }
 .contact p {
 	color: var(--color-text-muted);
 	font-size: 19px;
+}
+
+/* ---- a world's write-ups (Notes.astro) ----
+   Right after each world, on its background, in a card that takes the
+   world's colours. The --color-* tokens are redefined per world so the
+   write-up and the live demos inside it match, as on /projects/. */
+.j-notes {
+	position: relative;
+	z-index: 1;
+	padding: clamp(24px, 6vw, 72px) clamp(16px, 5vw, 48px) clamp(80px, 10vw, 140px);
+	color: var(--color-text);
+}
+
+.j-notes--rov {
+	--color-bg: #031426;
+	--color-bg-elevated: #06223a;
+	--color-text: #e4f3f7;
+	--color-text-muted: #b6ced7;
+	--color-accent: #6ff7d8;
+	--color-accent-soft: rgba(111, 247, 216, 0.12);
+	--color-on-accent: #01231c;
+	--color-border: rgba(111, 247, 216, 0.18);
+	--d-card: rgba(4, 26, 44, 0.82);
+}
+
+.j-notes--school {
+	--color-bg: #120d24;
+	--color-bg-elevated: #1c1538;
+	--color-text: #f3eeff;
+	--color-text-muted: #bdb3dc;
+	--color-accent: #ffd23f;
+	--color-accent-soft: rgba(255, 210, 63, 0.12);
+	--color-on-accent: #241a00;
+	--color-border: rgba(255, 210, 63, 0.2);
+	--d-card: rgba(28, 21, 56, 0.85);
+}
+
+.j-notes--drill {
+	--color-bg: #0b2a4a;
+	--color-bg-elevated: #0f355c;
+	--color-text: #e8f1ff;
+	--color-text-muted: #b0c6e2;
+	--color-accent: #ff8a3d;
+	--color-accent-soft: rgba(255, 138, 61, 0.12);
+	--color-on-accent: #2a1000;
+	--color-border: rgba(156, 200, 255, 0.24);
+	--d-card: rgba(11, 42, 74, 0.85);
+}
+
+.j-notes--iot {
+	--color-bg: #020604;
+	--color-bg-elevated: #07120b;
+	--color-text: #d2f9de;
+	--color-text-muted: #8fc19f;
+	--color-accent: #7cf29c;
+	--color-accent-soft: rgba(124, 242, 156, 0.1);
+	--color-on-accent: #01200b;
+	--color-border: rgba(124, 242, 156, 0.2);
+	--d-display: var(--font-mono);
+	--d-card: rgba(7, 18, 11, 0.9);
+}
+
+.j-notes--web {
+	--color-bg: #eef2f6;
+	--color-bg-elevated: #ffffff;
+	--color-text: #0f172a;
+	--color-text-muted: #475569;
+	--color-accent: #0e7490;
+	--color-accent-soft: rgba(14, 116, 144, 0.1);
+	--color-on-accent: #ffffff;
+	--color-border: #d5dde7;
+	--d-display: var(--font-sans);
+	--d-card: rgba(255, 255, 255, 0.9);
+}
+
+.j-notes__inner {
+	display: flex;
+	flex-direction: column;
+	gap: clamp(40px, 5vw, 64px);
+	max-width: var(--max-width);
+	margin-inline: auto;
+	padding: clamp(20px, 4vw, 48px);
+	border: 1px solid var(--color-border);
+	border-radius: 24px;
+	background: var(--d-card);
+	backdrop-filter: blur(8px);
+}
+
+/* the card already frames the first write-up */
+.j-notes__inner > .d-detail:first-child {
+	padding-top: 0;
+	border-top: 0;
+}
+
+/* the school's pixel font, smaller so the write-up stays readable */
+.j-notes--school .d-detail__head h2 {
+	font: 18px / 1.5 "Press Start 2P", var(--font-mono);
+}
+
+.j-notes--school .d-detail__body h3 {
+	font: 13px / 1.6 "Press Start 2P", var(--font-mono);
+}
+
+.j-notes__demo {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	max-width: 600px;
+}
+
+.j-notes__eyebrow {
+	color: var(--color-accent);
+	font: 500 13px var(--font-mono);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.j-notes__demo .demo {
+	margin: 0;
+	padding: 20px;
+	border: 1px solid var(--color-border);
+	border-radius: 18px;
+	background: var(--color-bg-elevated);
 }
 
 /* ---- chapter rail ---- */

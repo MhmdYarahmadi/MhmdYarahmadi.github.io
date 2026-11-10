@@ -10,17 +10,28 @@ import SceneIot from "../components/journey/SceneIot.astro";
 import SceneWeb from "../components/journey/SceneWeb.astro";
 import Stack from "../components/home/Stack.astro";
 import AboutMe from "../components/home/AboutMe.astro";
-import ContactBlock from "../components/home/ContactBlock.astro";
-import ProjectModals from "../components/ProjectModals.astro";
+import Contact from "../components/Contact.astro";
+import Notes from "../components/journey/Notes.astro";
+import SalesPipeline from "../components/islands/SalesPipeline";
+import { getEntry } from "astro:content";
 import "../styles/journey.css";
 import "../styles/home.css";
+
+const entry = async (id: string) => (await getEntry("projects", id))!;
+const rov = await entry("rov");
+const school = await entry("gamified-school");
+const drill = await entry("drilling-simulation");
+const web = await entry("web-enterprise");
+const iot = await Promise.all(["backup-power-camera", "sous-vide", "ac-remote"].map(entry));
+const about = "About the project";
 ---
 
 {/* The earlier homepage, kept at /journey/ (noindex, not linked): a scroll journey: each project is a full-screen world
     with its own look (src/styles/journey.css), driven by
     src/scripts/journey.ts. The skills stack, about and contact
     (src/components/home/) follow in the plain
-    site style. Project details open in modals; the ROV has its own page. */}
+    site style. Each world is followed by its write-ups (Notes.astro), as on
+    /projects/; the ROV's full 3D dive is on its own page. */}
 <BaseLayout
 	title="Mohammad Yarahmadi · Embedded software engineer"
 	description="Embedded software, IoT and web: an underwater ROV, a gamified programming school, a drilling simulator, ESP32 builds, and websites and Odoo ERP for businesses."
@@ -34,19 +45,27 @@ import "../styles/home.css";
 		{/* the nav's Work link lands on the first world */}
 		<span id="work" aria-hidden="true"></span>
 		<SceneRov />
+		<Notes scene="rov" world="rov" chapter="01 · ROV · Notes" label="About the ROV" projects={[rov]} title={about} />
 		<SceneSchool />
+		<Notes scene="school" world="school" chapter="02 · Gamified School · Notes" label="About the Gamified School" projects={[school]} title={about} />
 		<SceneDrill />
+		<Notes scene="drilling" world="drill" chapter="03 · Drilling sim · Notes" label="About the Drilling Simulation" projects={[drill]} title={about} />
 		<SceneIot />
+		<Notes scene="iot" world="iot" chapter="04 · IoT builds · Notes" label="About the IoT builds" projects={iot} />
 		<SceneWeb />
+		<Notes scene="web" world="web" chapter="05 · Websites & Enterprise · Notes" label="About Websites and Enterprise" projects={[web]} title={about}>
+			<div class="j-notes__demo">
+				<p class="j-notes__eyebrow">Try it · a sales pipeline with made-up deals</p>
+				<SalesPipeline client:visible />
+			</div>
+		</Notes>
 		<div class="j-plain">
 			<Stack journey />
 			<AboutMe journey />
-			<ContactBlock journey />
+			<Contact />
 		</div>
 	</div>
-	<ProjectModals slot="overlays" />
 	<script>
 		import "../scripts/journey.ts";
-		import "../scripts/home.ts";
 	</script>
 </BaseLayout>

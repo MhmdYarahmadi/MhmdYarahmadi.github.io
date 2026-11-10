@@ -44,12 +44,8 @@ const {
 			<slot />
 		</main>
 		<Footer />
-		{/* Modals live outside <main> so the modal script can mark the page
-		    behind them inert without also disabling the modal itself. */}
-		<slot name="overlays" />
 		<script>
 			import "../scripts/reveal.ts";
-			import "../scripts/modal.ts";
 		</script>
 	</body>
 </html>
