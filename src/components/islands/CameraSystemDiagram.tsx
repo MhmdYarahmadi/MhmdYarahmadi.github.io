@@ -8,7 +8,7 @@ export default function CameraSystemDiagram() {
 	// in: accent for the live path, a muted line for idle ones. Set through
 	// style (not SVG attributes) so var() resolves in every browser.
 	const ON = "var(--color-accent)";
-	const OFF = "color-mix(in srgb, var(--color-text-muted) 45%, transparent)";
+	const OFF = "var(--color-text-muted)";
 	const TEXT = "var(--color-text)";
 	const mainsColor = outage ? OFF : ON;
 	const batteryColor = outage ? ON : OFF;
