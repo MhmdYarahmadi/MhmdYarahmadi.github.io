@@ -1833,4 +1833,9 @@ body.deep {
 	.d-plain .j-section {
 		scroll-margin-top: 0;
 	}
+
+	/* the ROV stage sticks to the very top instead of under the nav */
+	.d-dive__stagecol {
+		top: 0;
+	}
 }
