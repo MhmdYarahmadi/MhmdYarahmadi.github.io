@@ -1,13 +1,13 @@
 /**
- * The ROV's full dive on /projects/: the ROV project page rebuilt in the deep
- * style. Maps scroll through the dive section to 0–30 m and drives the
+ * The ROV's full dive (RovDive.astro, on /projects/ and /journey/): the ROV
+ * project page rebuilt in the deep style. Maps scroll through the dive section to 0–30 m and drives the
  * depth gauge, water colour, captions, pings and footage, like descent.ts
  * does on the ROV page. The 3D scene from that page (descentScene.ts) loads
  * the first time the dive comes near the screen; until then, and with
  * reduced motion, the stage shows a still image.
  *
- * Everything sleeps while another project is picked (the section is
- * display: none then).
+ * On /projects/ everything sleeps while another project is picked (the
+ * section is display: none then); on /journey/ there is no picker.
  */
 
 const MAX = 30;
@@ -24,9 +24,9 @@ const marker = document.getElementById("d-g-marker")!;
 const read = document.getElementById("d-g-read")!;
 const deepbg = document.getElementById("d-deepbg") as HTMLVideoElement;
 const feed = document.getElementById("d-feed") as HTMLVideoElement;
-const rovPicked = document.getElementById("vibe-rov") as HTMLInputElement;
+const rovPicked = document.getElementById("vibe-rov") as HTMLInputElement | null;
 
-const on = () => rovPicked.checked;
+const on = () => !rovPicked || rovPicked.checked;
 let depth = 0;
 
 // Water colour by depth, as on the ROV page: teal → blue-green → near-black.

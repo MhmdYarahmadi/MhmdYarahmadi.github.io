@@ -4,6 +4,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Contact from "../../components/Contact.astro";
 import { getEntry } from "astro:content";
 import ProjectDetail from "../../components/ProjectDetail.astro";
+import RovSpec from "../../components/rov/RovSpec.astro";
+import RovDive from "../../components/rov/RovDive.astro";
 import SalesPipeline from "../../components/islands/SalesPipeline";
 import "../../styles/journey.css";
 import "../../styles/deep.css";
@@ -19,15 +21,6 @@ const vibes = [
 	{ id: "school", label: "Gamified School", text: "Git, Docker, PostgreSQL and system design as quests, for my college students." },
 	{ id: "drill", label: "Drilling Simulation", text: "A well-drilling simulator with ESP32 boards as the rig's real control panels." },
 	{ id: "iot", label: "IoT builds", text: "A backup-power camera, a sous vide controller and a smart AC remote." },
-];
-
-// The ROV hero card's stack, by layer
-const rovStack: [string, string[]][] = [
-	["Hardware", ["Raspberry Pi", "ESP32", "IP camera", "Leak sensor (own design)"]],
-	["Software", ["Python", "Embedded C", "Linux"]],
-	["Links", ["Bluetooth", "UDP", "Wi-Fi", "Tether", "USB serial"]],
-	["Video", ["RTSP", "ONVIF"]],
-	["Control", ["PWM", "6 thrusters"]],
 ];
 
 // Each project's write-up, shown under its panel while it is picked
@@ -103,21 +96,7 @@ const particles = Array.from({ length: 18 }, (_, i) => ({
 					laptop down to six thrusters, and the network that brings the camera back up.
 				</p>
 			</div>
-			<div class="d-visual d-card-spec">
-				<div class="d-card-spec__head"><span>ROV · Spec sheet</span><span class="d-card-spec__live"><i aria-hidden="true"></i>Online</span></div>
-				<dl>
-					<div><dt>Max depth</dt><dd>30 m</dd></div>
-				</dl>
-				{
-					rovStack.map(([group, items]) => (
-						<div class="d-card-spec__stack">
-							<p>{group}</p>
-							<ul>{items.map((t) => <li>{t}</li>)}</ul>
-						</div>
-					))
-				}
-				<div class="d-card-spec__depth" aria-hidden="true"><i></i></div>
-			</div>
+			<RovSpec />
 		</div>
 
 		<div class="d-panel d-panel--school">
@@ -201,128 +180,8 @@ const particles = Array.from({ length: 18 }, (_, i) => ({
 	<div class="d-details d-details--iot">{iot.map((p) => <ProjectDetail project={p} />)}</div>
 	<div class="d-details d-details--web"><ProjectDetail project={web} title="About the project" repeatsLede /></div>
 
-	{/* The ROV's full dive, shown while the ROV is picked: the ROV project page, rebuilt in the deep style.
-	    src/scripts/deepDive.ts maps scroll to 0–30 m here and lazy-loads the
-	    3D scene from the ROV page (src/scripts/descentScene.ts). */}
-	<section class="d-dive" id="dive" aria-labelledby="dive-title">
-		<video class="d-dive__deep" id="d-deepbg" src={url("/media/rov-deep.mp4")} poster={url("/media/rov-deep.jpg")} muted loop playsinline preload="none" aria-hidden="true"></video>
-		<div class="d-dive__layout">
-			<div class="d-dive__story">
-				<section class="d-sec" data-depth="0" data-cap="At the surface">
-					<h2 id="dive-title">The full dive</h2>
-					<p class="d-lede">
-						A tethered underwater vehicle driven with a controller. I built the whole chain,
-						from the controller on the laptop down to the thrusters, and the network that brings
-						the camera video back up. Scroll to take it down to 30 m.
-					</p>
-					<p class="d-muted">Networking, embedded, controls</p>
-				</section>
-
-				<section class="d-sec" data-depth="5" data-cap="LEDs switch on automatically in the dark">
-					<h3>Six thrusters, a camera and two lights</h3>
-					<p class="d-muted">
-						An operator on the surface drives the ROV with a controller and watches its camera on
-						a laptop. Under the clear acrylic covers on the front sit the IP camera and two LEDs,
-						which switch on by themselves once it gets dark.
-					</p>
-					<dl class="d-facts">
-						<div><dt>Envelope (CAD)</dt><dd>716 × 550 × 120 mm</dd></div>
-						<div><dt>Thrusters</dt><dd>6</dd></div>
-						<div><dt>Max depth</dt><dd>30 m</dd></div>
-						<div><dt>Control</dt><dd>Bluetooth controller</dd></div>
-						<div><dt>Link</dt><dd>UDP over Wi-Fi + tether</dd></div>
-						<div><dt>On board</dt><dd>Raspberry Pi + ESP32</dd></div>
-						<div><dt>Camera</dt><dd>IP camera, front centre</dd></div>
-						<div><dt>Lights</dt><dd>2 LEDs, automatic</dd></div>
-						<div><dt>Leak sensor</dt><dd>Our own design</dd></div>
-						<div><dt>If it leaks</dt><dd>Surfaces by itself</dd></div>
-					</dl>
-				</section>
-
-				<section class="d-sec" data-depth="12" data-cap="Camera · front centre, behind acrylic">
-					<h3>From the controller to the thrusters</h3>
-					<p class="d-muted">
-						Commands go down: controller to laptop, over Wi-Fi to the modem buoy, down the tether
-						to a switch inside the ROV, then to the Raspberry Pi. The Pi decodes them and sends PWM
-						values to the ESP32, which drives the thrusters. The camera's video takes the same
-						network back up to the laptop.
-					</p>
-					<figure class="d-feed">
-						<div class="d-feed__frame">
-							<video id="d-feed" src={url("/media/rov-feed.mp4")} poster={url("/media/rov-feed.jpg")} muted loop playsinline preload="metadata" aria-label="Footage from the ROV's camera: a school of fish around a structure's leg, with the tether in view"></video>
-							<span class="d-feed__tag"><i></i>IP camera · on the laptop</span>
-						</div>
-						<figcaption class="d-muted">The ROV's own camera: fish around the legs of an offshore platform, with the yellow tether in view.</figcaption>
-					</figure>
-					<svg class="d-diagram" viewBox="0 0 340 500" role="img" aria-labelledby="d-diag-t">
-						<title id="d-diag-t">Control chain: controller, Bluetooth, laptop, Wi-Fi with UDP, modem buoy, tether, network switch, Raspberry Pi, USB serial, ESP32, PWM, six thrusters. The IP camera connects to the switch and its video travels back up to the laptop. A leak sensor of our own design feeds the Raspberry Pi.</title>
-						<defs>
-							<marker id="d-arr-c" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m-cmd" d="M0 0 L8 4 L0 8 Z"></path></marker>
-							<marker id="d-arr-v" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m-vid" d="M0 0 L8 4 L0 8 Z"></path></marker>
-						</defs>
-						<text class="small" x="0" y="12">SURFACE</text>
-						<rect x="95" y="20" width="150" height="34" rx="8"></rect><text x="170" y="41" text-anchor="middle">Controller</text>
-						<path class="cmd" d="M185 54 V82" marker-end="url(#d-arr-c)"></path><text class="lbl" x="196" y="72">Bluetooth</text>
-						<rect x="95" y="84" width="150" height="34" rx="8"></rect><text x="170" y="105" text-anchor="middle">Laptop</text>
-						<path class="cmd" d="M185 118 V146" marker-end="url(#d-arr-c)"></path><text class="lbl" x="196" y="136">Wi-Fi · UDP</text>
-						<path class="vid" d="M155 148 V120" marker-end="url(#d-arr-v)"></path>
-						<rect x="95" y="148" width="150" height="34" rx="8"></rect><text x="170" y="169" text-anchor="middle">Modem buoy</text>
-						<path class="waterline" d="M0 204 C 40 196, 80 212, 120 204 S 200 196, 240 204 S 320 212, 340 204"></path>
-						<text class="small" x="0" y="222">UNDERWATER</text>
-						<path class="cmd tether" d="M185 182 V246" marker-end="url(#d-arr-c)"></path><text class="lbl" x="196" y="232">Tether</text>
-						<path class="vid" d="M155 248 V184" marker-end="url(#d-arr-v)"></path>
-						<rect x="95" y="248" width="150" height="34" rx="8"></rect><text x="170" y="269" text-anchor="middle">Network switch</text>
-						<rect x="0" y="298" width="80" height="34" rx="8"></rect><text x="40" y="319" text-anchor="middle">IP camera</text>
-						<path class="vid" d="M40 298 V272 H93" marker-end="url(#d-arr-v)"></path>
-						<path class="cmd" d="M185 282 V310" marker-end="url(#d-arr-c)"></path>
-						<rect x="95" y="312" width="150" height="34" rx="8"></rect><text x="170" y="333" text-anchor="middle">Raspberry Pi</text>
-						<rect x="262" y="312" width="78" height="34" rx="8"></rect><text x="301" y="333" text-anchor="middle">Leak sensor</text>
-						<path class="vid solid" d="M262 329 H247" marker-end="url(#d-arr-v)"></path>
-						<path class="cmd" d="M185 346 V374" marker-end="url(#d-arr-c)"></path><text class="lbl" x="196" y="364">USB serial</text>
-						<rect x="95" y="376" width="150" height="34" rx="8"></rect><text x="170" y="397" text-anchor="middle">ESP32</text>
-						<path class="cmd" d="M185 410 V438" marker-end="url(#d-arr-c)"></path><text class="lbl" x="196" y="428">PWM</text>
-						<rect x="95" y="440" width="150" height="34" rx="8"></rect><text x="170" y="461" text-anchor="middle">Thrusters ×6</text>
-					</svg>
-					<p class="d-legend"><b>Glowing</b> commands going down · <span>dashed</span> camera video going up</p>
-				</section>
-
-				<section class="d-sec" data-depth="20" data-cap="Exploded view · 6 thrusters">
-					<h3>The whole chain, controller to propeller</h3>
-					<div class="d-work">
-						<article><h4>Controller &amp; laptop</h4><p>Reads the controller over Bluetooth and sends the operator's commands as UDP packets.</p></article>
-						<article><h4>Network</h4><p>A modem buoy at the surface, the tether, and a switch inside the ROV make one IP network. Commands go down it and the camera's video comes back up.</p></article>
-						<article><h4>Raspberry Pi</h4><p>Receives the UDP commands, decodes them, and sends PWM values to the ESP32 over USB serial.</p></article>
-						<article><h4>ESP32</h4><p>Turns those values into the PWM signals that drive the six thrusters.</p></article>
-						<article><h4>Leak sensor</h4><p>We made our own sensor to detect water getting inside the hull. It reports to the Raspberry Pi, and if it detects a leak the ROV automatically rises back to the surface.</p></article>
-					</div>
-				</section>
-
-				<section class="d-sec" data-depth="30" data-cap="Max depth · 30 m">
-					<h3>Down to 30 metres</h3>
-					<p class="d-muted">
-						Driven with a controller, with live camera video on the laptop and a leak sensor that
-						brings it back up on its own, taken down to 30 m.
-					</p>
-					<div class="d-actions">
-						<a class="btn btn--primary" href="#dive">Back to the surface ↑</a>
-					</div>
-				</section>
-			</div>
-
-			<div class="d-dive__stagecol" aria-hidden="true">
-				<div class="d-stage" id="d-stage">
-					<img class="d-stage__poster" alt="" src={url("/models/rov-poster.webp")} width="1000" height="640" loading="lazy" />
-					<span class="d-stage__status" id="d-status" role="status"></span>
-					<span class="d-stage__cap" id="d-cap">At the surface</span>
-					<div class="d-gauge" id="d-gauge">
-						<div class="d-gauge__rail"></div>
-						<div class="d-gauge__marker" id="d-g-marker"></div>
-						<div class="d-gauge__read" id="d-g-read">0.0 m</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+	{/* The ROV's full dive, shown while the ROV is picked (deep.css hides it otherwise). */}
+	<RovDive />
 
 	{/* Points on to the project after the picked one; deep.css shows only that card. */}
 	<section class="d-next" id="next" aria-labelledby="next-title">
@@ -344,6 +203,5 @@ const particles = Array.from({ length: 18 }, (_, i) => ({
 
 	<script>
 		import "../../scripts/deep.ts";
-		import "../../scripts/deepDive.ts";
 	</script>
 </BaseLayout>

@@ -1,0 +1,644 @@
+/* The ROV, shared by /projects/ and /journey/: the spec sheet
+   (RovSpec.astro) and the full dive (RovDive.astro, driven by
+   src/scripts/deepDive.ts). The dive sets its own ocean colours, so it
+   looks the same on any page; the spec sheet takes the page's --color-*
+   and --d-* tokens. */
+@import "@fontsource-variable/sora";
+
+/* ROV: a spec sheet (the 3D model lives in the dive below) */
+.d-card-spec {
+	padding: 28px;
+	border: 1px solid var(--color-border);
+	border-radius: 22px;
+	background: var(--d-card);
+	backdrop-filter: blur(8px);
+	box-shadow: 0 0 80px -20px var(--d-glow-soft);
+}
+
+.d-card-spec__head {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 8px;
+	font: 500 12px var(--font-mono);
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-text-muted);
+}
+
+.d-card-spec__live {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--color-accent);
+}
+
+.d-card-spec__live i {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--color-accent);
+	box-shadow: 0 0 12px var(--color-accent);
+	animation: d-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes d-pulse {
+	50% { opacity: 0.35; }
+}
+
+.d-card-spec dl div {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 16px;
+	padding: 14px 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.d-card-spec dt {
+	font: 12px var(--font-mono);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-text-muted);
+}
+
+.d-card-spec dd {
+	font: 600 17px var(--d-display);
+	text-align: right;
+}
+
+.d-card-spec__stack {
+	display: grid;
+	grid-template-columns: 6.5rem 1fr;
+	align-items: start;
+	gap: 12px;
+	padding: 14px 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.d-card-spec__stack p {
+	padding-top: 7px;
+	font: 12px var(--font-mono);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-text-muted);
+}
+
+.d-card-spec__stack ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	list-style: none;
+}
+
+.d-card-spec__stack li {
+	padding: 5px 11px;
+	border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+	border-radius: 999px;
+	background: var(--color-accent-soft);
+	font: 13px var(--font-mono);
+	color: var(--color-text);
+}
+
+@media (max-width: 480px) {
+	.d-card-spec__stack {
+		grid-template-columns: 1fr;
+		gap: 8px;
+	}
+
+	.d-card-spec__stack p {
+		padding-top: 0;
+	}
+}
+
+/* a depth bar, surface to 30 m */
+.d-card-spec__depth {
+	height: 6px;
+	margin-top: 20px;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+	overflow: hidden;
+}
+
+.d-card-spec__depth i {
+	display: block;
+	height: 100%;
+	width: 100%;
+	border-radius: inherit;
+	background: linear-gradient(90deg, var(--color-accent), #2c7896);
+	transform-origin: left;
+	animation: d-sound 3.2s var(--ease-out) 0.3s both;
+}
+
+@keyframes d-sound {
+	from { transform: scaleX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.d-card-spec__live i,
+	.d-card-spec__depth i {
+		animation: none;
+	}
+}
+
+/* ---- the full dive (ROV page, deep style) ---- */
+.d-dive {
+	/* always ocean, whichever mood is picked */
+	--water: #1f6a86;
+	--deep: 0;
+	--fg: #e6f4f8;
+	--muted: #d0e5ed;
+	--line: rgba(230, 244, 248, 0.2);
+	--hi: #6ff7d8;
+	--color-text: var(--fg);
+	--color-text-muted: var(--muted);
+	--color-accent: #6ff7d8;
+	--color-accent-soft: rgba(111, 247, 216, 0.14);
+	--color-on-accent: #01231c;
+	--color-border: var(--line);
+	--color-bg-elevated: #06223a;
+	--d-glow-soft: rgba(111, 247, 216, 0.28);
+	position: relative;
+	color: var(--fg);
+	background: linear-gradient(180deg, transparent 0, var(--water) 220px, var(--water) calc(100% - 220px), transparent);
+	scroll-margin-top: 72px;
+	transition: background-color 0.3s linear;
+}
+
+.d-dive__deep {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: var(--deep);
+	mix-blend-mode: screen;
+	pointer-events: none;
+}
+
+.d-dive__layout {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+	gap: clamp(24px, 4vw, 56px);
+	max-width: 84rem;
+	margin-inline: auto;
+	padding: 0 clamp(16px, 5vw, 72px);
+}
+
+.d-dive__story {
+	display: flex;
+	flex-direction: column;
+}
+
+.d-sec {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 22px;
+	min-height: 100svh;
+	padding: 80px 0;
+}
+
+.d-sec h2 {
+	font: 700 clamp(44px, 6vw, 84px) / 1 "Sora Variable", var(--font-sans);
+	letter-spacing: -0.04em;
+	text-shadow: 0 0 60px var(--d-glow-soft);
+}
+
+.d-sec h3 {
+	font: 600 clamp(30px, 3.6vw, 46px) / 1.08 "Sora Variable", var(--font-sans);
+	letter-spacing: -0.03em;
+}
+
+.d-muted {
+	color: var(--muted);
+	font-size: 17px;
+	line-height: 1.65;
+}
+
+.d-facts {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.d-facts div {
+	display: grid;
+	gap: 4px;
+	padding: 14px 16px;
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	background: rgba(1, 7, 15, 0.35);
+	backdrop-filter: blur(6px);
+}
+
+.d-facts dt {
+	font: 500 11px var(--font-mono);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--hi);
+}
+
+.d-facts dd {
+	font-size: 16px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+.d-feed {
+	display: grid;
+	gap: 10px;
+}
+
+.d-feed__frame {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	overflow: hidden;
+	box-shadow: 0 0 60px var(--d-glow-soft), 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.d-feed video {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.d-feed__tag {
+	position: absolute;
+	left: 12px;
+	top: 12px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: rgba(1, 7, 15, 0.7);
+	font: 500 11px var(--font-mono);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.d-feed__tag i {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #ff5a4f;
+	animation: d-blink 1.6s steps(2, start) infinite;
+}
+
+.d-feed figcaption {
+	font-size: 14px;
+}
+
+.d-diagram {
+	width: 100%;
+	max-width: 380px;
+	height: auto;
+	overflow: visible;
+}
+
+.d-diagram rect {
+	fill: rgba(1, 7, 15, 0.45);
+	stroke: var(--line);
+	stroke-width: 1.2;
+}
+
+.d-diagram text {
+	fill: var(--fg);
+	font: 500 11px var(--font-mono);
+}
+
+.d-diagram text.small {
+	fill: var(--muted);
+	font-size: 9.5px;
+	letter-spacing: 0.08em;
+}
+
+.d-diagram text.lbl {
+	fill: var(--hi);
+	font-size: 10.5px;
+}
+
+.d-diagram .cmd {
+	stroke: var(--hi);
+	stroke-width: 1.8;
+	fill: none;
+	filter: drop-shadow(0 0 4px var(--hi));
+}
+
+.d-diagram .cmd.tether {
+	stroke-width: 3;
+}
+
+.d-diagram .m-cmd {
+	fill: var(--hi);
+}
+
+.d-diagram .vid {
+	stroke: var(--fg);
+	stroke-width: 1.4;
+	fill: none;
+	stroke-dasharray: 4 3;
+}
+
+.d-diagram .vid.solid {
+	stroke-dasharray: none;
+}
+
+.d-diagram .m-vid {
+	fill: var(--fg);
+}
+
+.d-diagram .waterline {
+	stroke: var(--muted);
+	stroke-width: 1;
+	fill: none;
+	stroke-dasharray: 2 4;
+}
+
+.d-legend {
+	font: 13px var(--font-mono);
+	color: var(--muted);
+}
+
+.d-legend b {
+	font-weight: 500;
+	color: var(--hi);
+	text-shadow: 0 0 10px var(--hi);
+}
+
+.d-legend span {
+	color: var(--fg);
+	border-bottom: 1.5px dashed var(--fg);
+}
+
+.d-work {
+	display: grid;
+	gap: 12px;
+}
+
+.d-work article {
+	display: grid;
+	gap: 6px;
+	padding: 18px 20px;
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	background: rgba(1, 7, 15, 0.35);
+	backdrop-filter: blur(6px);
+}
+
+.d-work h4 {
+	font: 600 17px "Sora Variable", var(--font-sans);
+	color: var(--hi);
+}
+
+.d-work p {
+	color: var(--muted);
+	font-size: 15px;
+}
+
+/* The 3D stage: sticky beside the story, with its own depth gauge */
+.d-dive__stagecol {
+	min-width: 0;
+}
+
+.d-stage {
+	position: sticky;
+	top: 88px;
+	height: calc(100svh - 112px);
+	margin-block: 24px;
+}
+
+.d-stage canvas {
+	position: absolute;
+	inset: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 0.8s ease;
+}
+
+.d-stage.live canvas {
+	opacity: 1;
+}
+
+.d-stage__poster {
+	position: absolute;
+	left: 0;
+	right: 100px;
+	top: 50%;
+	width: calc(100% - 100px);
+	height: auto;
+	translate: 0 -50%;
+	filter: drop-shadow(0 0 40px var(--d-glow-soft));
+	transition: opacity 0.8s ease;
+}
+
+.d-stage.live .d-stage__poster {
+	opacity: 0;
+}
+
+.d-stage__cap {
+	position: absolute;
+	left: 0;
+	bottom: 8px;
+	padding: 6px 12px;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: rgba(1, 7, 15, 0.5);
+	font: 500 12px var(--font-mono);
+	color: var(--fg);
+}
+
+.d-stage__status {
+	position: absolute;
+	left: 0;
+	top: 8px;
+	font: 11px var(--font-mono);
+	color: var(--muted);
+}
+
+.d-ping {
+	position: absolute;
+	left: 40%;
+	top: 50%;
+	width: 24px;
+	height: 24px;
+	margin: -12px 0 0 -12px;
+	border: 1px solid var(--hi);
+	border-radius: 50%;
+	pointer-events: none;
+	animation: d-ping 1.6s cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+}
+
+@keyframes d-ping {
+	from { transform: scale(1); opacity: 0.9; }
+	to { transform: scale(14); opacity: 0; }
+}
+
+.d-gauge {
+	position: absolute;
+	right: 0;
+	top: 8%;
+	bottom: 8%;
+	width: 84px;
+	font: 11px var(--font-mono);
+	color: var(--muted);
+}
+
+.d-gauge__rail {
+	position: absolute;
+	right: 24px;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	background: var(--line);
+}
+
+.d-gauge__tick {
+	position: absolute;
+	right: 24px;
+	width: 6px;
+	height: 1px;
+	background: var(--line);
+}
+
+.d-gauge__tick.major {
+	width: 12px;
+	background: var(--muted);
+}
+
+.d-gauge__num {
+	position: absolute;
+	right: 0;
+	translate: 0 -50%;
+	font-variant-numeric: tabular-nums;
+}
+
+.d-gauge__marker {
+	position: absolute;
+	right: 18px;
+	width: 13px;
+	height: 13px;
+	margin-top: -6.5px;
+	border-radius: 50%;
+	background: var(--hi);
+	box-shadow: 0 0 0 4px rgba(111, 247, 216, 0.25), 0 0 18px var(--hi);
+}
+
+.d-gauge__read {
+	position: absolute;
+	right: 40px;
+	translate: 0 -50%;
+	padding: 4px 8px;
+	border-radius: 999px;
+	background: rgba(1, 7, 15, 0.7);
+	color: var(--fg);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+/* Phones: the stage becomes a sticky band at the top, the story scrolls under it */
+@media (max-width: 900px) {
+	.d-dive__layout {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+
+	.d-dive__stagecol {
+		position: sticky;
+		top: 72px;
+		z-index: 1;
+		height: 40svh;
+		margin-inline: calc(-1 * clamp(16px, 5vw, 72px));
+		background: linear-gradient(180deg, var(--water) 75%, transparent);
+	}
+
+	.d-stage {
+		position: absolute;
+		inset: 0;
+		height: auto;
+		margin: 0;
+	}
+
+	.d-stage__poster {
+		left: 16px;
+		width: calc(100% - 80px);
+	}
+
+	.d-stage__cap {
+		left: 16px;
+	}
+
+	.d-stage__status {
+		left: 16px;
+	}
+
+	.d-gauge {
+		width: 48px;
+		right: 8px;
+	}
+
+	.d-gauge__num {
+		display: none;
+	}
+
+	.d-gauge__rail,
+	.d-gauge__tick {
+		right: 8px;
+	}
+
+	.d-gauge__marker {
+		right: 2px;
+	}
+
+	.d-gauge__read {
+		right: 22px;
+	}
+
+	.d-sec {
+		min-height: 0;
+		padding: 56px 0;
+	}
+
+	.d-facts {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.d-feed__tag i {
+		animation: none;
+	}
+}
+
+.d-gauge {
+	transition: opacity 0.4s ease;
+}
+
+.d-stage.surface .d-gauge {
+	opacity: 0;
+}
+
+/* The 3D model is the picture now; the still image is only a fallback for
+   when the 3D can't run (reduced motion, no WebGL). */
+.d-stage__poster {
+	display: none;
+}
+
+.d-stage.fallback .d-stage__poster {
+	display: block;
+}
+
+/* Phones have no sticky nav (Nav.astro), so the stage sticks to the very top. */
+@media (max-width: 760px) {
+	.d-dive__stagecol {
+		top: 0;
+	}
+}

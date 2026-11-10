@@ -1,0 +1,29 @@
+---
+import "../../styles/rov.css";
+
+// The ROV's spec sheet card, shared by /projects/ and /journey/, with its
+// stack by layer.
+const rovStack: [string, string[]][] = [
+	["Hardware", ["Raspberry Pi", "ESP32", "IP camera", "Leak sensor (own design)"]],
+	["Software", ["Python", "Embedded C", "Linux"]],
+	["Links", ["Bluetooth", "UDP", "Wi-Fi", "Tether", "USB serial"]],
+	["Video", ["RTSP", "ONVIF"]],
+	["Control", ["PWM", "6 thrusters"]],
+];
+---
+
+<div class="d-visual d-card-spec">
+	<div class="d-card-spec__head"><span>ROV · Spec sheet</span><span class="d-card-spec__live"><i aria-hidden="true"></i>Online</span></div>
+	<dl>
+		<div><dt>Max depth</dt><dd>30 m</dd></div>
+	</dl>
+	{
+		rovStack.map(([group, items]) => (
+			<div class="d-card-spec__stack">
+				<p>{group}</p>
+				<ul>{items.map((t) => <li>{t}</li>)}</ul>
+			</div>
+		))
+	}
+	<div class="d-card-spec__depth" aria-hidden="true"><i></i></div>
+</div>
