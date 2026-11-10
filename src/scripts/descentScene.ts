@@ -437,7 +437,7 @@ export async function startScene({ stage, status, gauge, depth, start }: SceneOp
 		if (frustum) frustum.material.opacity = smooth(8.5, 11, d) * (1 - smooth(14.5, 17, d)) * 0.6;
 
 		// fog matches the page's water colour and thickens with depth
-		water.setStyle(getComputedStyle(document.documentElement).getPropertyValue("--water").trim() || "#2c7896");
+		water.setStyle(getComputedStyle(document.documentElement).getPropertyValue("--water").trim() || "#1f6a86");
 		fog.color.copy(water);
 		fog.near = dist * 0.75;
 		fog.far = dist * lerp(4.2, 2.1, d / 30);

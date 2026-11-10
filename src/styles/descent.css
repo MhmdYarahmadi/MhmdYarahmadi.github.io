@@ -5,13 +5,13 @@
 	 phones the stage becomes a sticky band at the top. A single deliberate
 	 look (underwater), so there are no light/dark variants. */
 :root {
-	--water: #2c7896;          /* rewritten from scroll by the depth script */
+	--water: #1f6a86;          /* rewritten from scroll by the depth script */
 	--rays: 1;                 /* sunlight strength, 1 at surface → 0 by 12 m */
 	--sky-top: #a9d8e8;
 	--sky-low: #e6f4f8;
-	--surface: #2c7896;        /* water colour at 0 m, matches the wave */
+	--surface: #1f6a86;        /* water colour at 0 m, matches the wave */
 	--fg: #eaf5f9;
-	--muted: #b2cdd8;
+	--muted: #d0e5ed;
 	--line: rgba(234, 245, 249, 0.28);
 	--hi: #ffb547;             /* ROV safety orange: gauge, my-work highlights */
 	--hi-ink: #1d1203;

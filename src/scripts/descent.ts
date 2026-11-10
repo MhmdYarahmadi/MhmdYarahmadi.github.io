@@ -32,8 +32,8 @@ setNavHeight();
 // Water colour by depth. Red is absorbed first (mostly gone by ~5 m), so the
 // shift runs teal → blue-green → near-black.
 const STOPS: [number, string][] = [
-	[0, "#2c7896"],
-	[5, "#1f6a86"],
+	[0, "#1f6a86"],
+	[5, "#1a5e78"],
 	[12, "#14506a"],
 	[20, "#0b3449"],
 	[30, "#04111b"],

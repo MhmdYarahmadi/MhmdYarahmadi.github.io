@@ -1055,10 +1055,10 @@ body.deep {
 .d-dive {
 	display: none;
 	/* always ocean, whichever mood is picked */
-	--water: #2c7896;
+	--water: #1f6a86;
 	--deep: 0;
 	--fg: #e6f4f8;
-	--muted: #a9c8d3;
+	--muted: #d0e5ed;
 	--line: rgba(230, 244, 248, 0.2);
 	--hi: #6ff7d8;
 	--color-text: var(--fg);
