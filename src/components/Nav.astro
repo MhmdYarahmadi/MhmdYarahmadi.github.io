@@ -31,7 +31,7 @@ const links = [
 			<ul class="nav__links">
 				{
 					links.map((link) => (
-						<li class:list={{ "nav__dup": link.label === "Contact", "nav__about": link.label === "About" }}>
+						<li>
 							<a href={link.href}>{link.label}</a>
 						</li>
 					))
@@ -146,38 +146,6 @@ const links = [
 
 	.nav__cta a:hover {
 		background: color-mix(in srgb, var(--nav-acc) 12%, transparent);
-	}
-
-	/* phones: the button replaces the plain Contact link */
-	@media (max-width: 520px) {
-		.nav__dup {
-			display: none;
-		}
-
-		.nav__links a {
-			padding-inline: 0.5rem;
-		}
-
-		.nav__cta a {
-			padding-inline: 0.85rem;
-		}
-	}
-
-	/* small phones: About drops out (it's a scroll away on the homepage) */
-	@media (max-width: 400px) {
-		.nav__about {
-			display: none;
-		}
-
-		.nav__cta a {
-			padding-inline: 0.75rem;
-		}
-	}
-
-	@media (max-width: 760px) {
-		.nav__chapter {
-			display: none;
-		}
 	}
 
 	/* Phones: no header at all, it covered too much of a small screen.
