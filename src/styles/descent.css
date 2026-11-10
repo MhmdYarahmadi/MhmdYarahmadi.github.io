@@ -111,9 +111,9 @@ body.descent {
 .depth-tag { font: 600 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--hi); }
 .depth-tag span { color: var(--muted); font-weight: 400; }
 h1 {
-	font: 800 clamp(4.5rem, 14vw, 9rem)/.86 var(--display); font-stretch: 70%; letter-spacing: -.01em;
+	font: 800 clamp(4.5rem, 14vw, 9rem)/.86 var(--display); letter-spacing: -.01em;
 }
-h2 { font: 700 clamp(2rem, 4.4vw, 3rem)/1.02 var(--display); font-stretch: 76%; text-wrap: balance; }
+h2 { font: 700 clamp(2rem, 4.4vw, 3rem)/1.02 var(--display); text-wrap: balance; }
 h3 { font: 600 15px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--hi); }
 .lede { font-size: 20px; line-height: 1.5; max-width: 30ch; }
 .muted { color: var(--muted); }
