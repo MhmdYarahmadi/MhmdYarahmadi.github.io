@@ -1,5 +1,5 @@
 ---
-title: "Web & Enterprise"
+title: "Websites & Enterprise"
 summary: "Company websites, currently Dealfdi, plus Odoo ERP and CRM services for businesses."
 role: "Web, ERP/CRM, sales"
 tags: ["websites", "Odoo", "ERP", "CRM", "sales"]
