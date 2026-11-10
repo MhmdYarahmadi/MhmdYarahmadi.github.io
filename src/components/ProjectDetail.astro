@@ -2,9 +2,10 @@
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import DemoSlot from "./DemoSlot.astro";
+import "../styles/detail.css";
 
 // A project's write-up (and live demo, if it has one) laid out on the page,
-// for /projects/.
+// for /projects/ and /journey/.
 interface Props {
 	project: CollectionEntry<"projects">;
 	// Heading for the section; defaults to the project's title.
