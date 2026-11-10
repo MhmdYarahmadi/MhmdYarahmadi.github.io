@@ -279,37 +279,6 @@ html:not(.js) .w-web { background: #eef2f6; }
 	letter-spacing: -0.05em;
 }
 
-.w-rov .sub {
-	font: 500 clamp(20px, 2vw, 26px) var(--font-display);
-}
-
-.w-rov .j-lede {
-	color: #a8cfe0;
-}
-
-.specs {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 18px 28px;
-	margin: 8px 0 0;
-}
-
-.specs div {
-	border-top: 1px solid rgba(127, 216, 240, 0.3);
-	padding-top: 10px;
-}
-
-.specs dt {
-	font: 11px var(--font-mono);
-	letter-spacing: 0.1em;
-	color: #7fd8f0;
-}
-
-.specs dd {
-	margin: 2px 0 0;
-	font-size: 15px;
-}
-
 .w-rov .btn--primary {
 	background: #7fd8f0;
 	border-color: #7fd8f0;
@@ -320,75 +289,25 @@ html:not(.js) .w-web { background: #eef2f6; }
 	border-color: rgba(205, 240, 255, 0.35);
 }
 
-.rov-visual {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 0;
-}
-
-.rov-visual img {
+.rov-spec {
+	/* the spec sheet's tokens, as for the ROV on /projects/ */
+	--color-bg-elevated: #06223a;
+	--color-text: #e4f3f7;
+	--color-text-muted: #b6ced7;
+	--color-accent: #6ff7d8;
+	--color-border: rgba(111, 247, 216, 0.18);
+	--d-display: "Sora Variable", var(--font-sans);
+	--d-card: rgba(6, 34, 58, 0.6);
+	--d-glow-soft: rgba(111, 247, 216, 0.28);
 	width: 100%;
 	max-width: 560px;
-	height: auto;
-	filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
+	justify-self: center;
+	color: var(--color-text);
 }
 
-.float {
-	animation: j-float 5s ease-in-out infinite;
-}
-
-@keyframes j-float {
-	50% { transform: translateY(-14px); }
-}
-
-/* room between the model and the chapter rail for the depth gauge */
-.w-rov .j-stick {
-	padding-right: calc(var(--rail-w) + 110px);
-}
-
-.rov-gauge {
-	position: absolute;
-	right: calc(var(--rail-w) + 20px);
-	top: 22%;
-	bottom: 22%;
-	width: 2px;
-	background: rgba(205, 240, 255, 0.25);
-}
-
-.rov-gauge > i {
-	position: absolute;
-	left: -6px;
-	width: 14px;
-	height: 1px;
-	background: rgba(205, 240, 255, 0.5);
-}
-
-.rov-gauge__read {
-	position: absolute;
-	right: 10px;
-	top: calc(var(--p) * 100%);
-	transform: translateY(-50%);
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	white-space: nowrap;
-	font: 600 28px var(--font-mono);
-}
-
-.rov-gauge__read small {
-	font-size: 14px;
-	color: #7fd8f0;
-}
-
-.rov-gauge__read::after {
-	content: "";
-	width: 12px;
-	height: 12px;
-	border-radius: 50%;
-	background: #7fd8f0;
-	box-shadow: 0 0 14px #7fd8f0;
+/* the full dive (RovDive.astro) scrolls over the fixed backdrop */
+.journey .d-dive {
+	z-index: 1;
 }
 
 /* ---- 02 Gamified School ---- */
@@ -1367,15 +1286,6 @@ html:not(.js) .w-web { background: #eef2f6; }
 		padding: var(--stage-pad-top) 16px 64px;
 	}
 
-	.w-rov .j-stick {
-		padding-right: 16px;
-	}
-
-	/* the stacked layout has no free edge for the depth gauge */
-	.rov-gauge {
-		display: none;
-	}
-
 	.rig {
 		height: 420px;
 	}
@@ -1439,7 +1349,6 @@ html:not(.js) .w-web { background: #eef2f6; }
 		transition: none;
 	}
 
-	.float,
 	.blink,
 	.nudge,
 	.levelup {

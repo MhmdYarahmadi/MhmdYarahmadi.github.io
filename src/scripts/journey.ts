@@ -3,7 +3,7 @@
  * scroll and writes it as --p (CSS does the bars, gauge and XP), toggles .on
  * on the active world and its background layer, updates the nav (chapter
  * pill, colours, progress bar) and the chapter rail, and drives the few
- * text bits CSS can't: depth readout, quest checklist, drill bit, panel
+ * text bits CSS can't: quest checklist, drill bit, panel
  * LEDs, terminal lines and the web pipeline cards.
  *
  * The markup is server-rendered in its final state, so without JS (or with
@@ -52,8 +52,6 @@ function progress(el: HTMLElement): number {
 const q = <T extends Element = HTMLElement>(sel: string, scope: ParentNode = document) =>
 	scope.querySelector<T>(sel);
 
-const depthEl = q("[data-depth]");
-
 const quest = q("[data-quest]");
 const questItems = quest ? [...quest.querySelectorAll("li")] : [];
 const xpEl = q("[data-xp]");
@@ -75,7 +73,6 @@ const termLines = [...(q("[data-term]")?.children ?? [])].slice(0, -1) as HTMLEl
 const DETAILS: Record<string, (p: number) => void> = {
 	rov(p) {
 		root.style.setProperty("--p-rov", p.toFixed(3));
-		if (depthEl) depthEl.textContent = `−${Math.round(p * 30)}`;
 	},
 	school(p) {
 		const done = Math.min(questItems.length, Math.floor(p * 4.4));
@@ -149,8 +146,8 @@ function update() {
 		if (pill) pill.textContent = next.dataset.chapter ?? "";
 		const id = next.id;
 		// Skills has no rail entry; it belongs with About. A world's notes
-		// (#<world>-notes) belong with the world.
-		const railId = id === "skills" ? "about" : id.replace(/-notes$/, "");
+		// (#<world>-notes) belong with the world, and the dive with the ROV.
+		const railId = id === "skills" ? "about" : id === "dive" ? "rov" : id.replace(/-notes$/, "");
 		for (const a of railLinks) {
 			if (a.dataset.rail === railId) a.setAttribute("aria-current", "true");
 			else a.removeAttribute("aria-current");
