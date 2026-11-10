@@ -25,7 +25,7 @@ export default function CameraSystemDiagram() {
 					type="button"
 					onClick={() => setOutage((o) => !o)}
 				>
-					Simulate {outage ? "power restored" : "power outage"}
+					{outage ? "Restore power" : "Simulate power outage"}
 				</button>
 			</div>
 
