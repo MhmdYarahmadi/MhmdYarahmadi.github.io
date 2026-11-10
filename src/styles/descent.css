@@ -155,7 +155,7 @@ h3 { font: 600 15px var(--mono); letter-spacing: .06em; text-transform: uppercas
 	font: 600 15px var(--body); background: var(--hi); color: var(--hi-ink); border: 0;
 }
 .btn--ghost { background: none; color: var(--fg); border: 1px solid var(--line); }
-.email { font: 500 15px var(--mono); word-break: break-all; }
+.email { font: 500 15px var(--mono); word-break: break-all; color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- depth gauge ---------- */
 .gauge {
