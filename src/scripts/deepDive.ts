@@ -166,6 +166,10 @@ new IntersectionObserver(
 ).observe(feed);
 
 // ---- 3D: loaded the first time the dive comes near the screen ----
+// Not before the visitor first scrolls: on /projects/ the dive starts just
+// below the fold, so someone who only opens the page (or picks another
+// project) never downloads the ~650 KB of three.js and model.
+let scrolled = false;
 let loading = false;
 let watcher: IntersectionObserver | null = null;
 function load3d() {
@@ -193,7 +197,7 @@ function load3d() {
 		});
 }
 function watch3d() {
-	if (loading || watcher) return;
+	if (loading || watcher || !scrolled) return;
 	if (reduced.matches) {
 		stage.classList.add("fallback");
 		statusEl.textContent = "Reduced motion: still image";
@@ -205,6 +209,13 @@ function watch3d() {
 
 measure();
 update();
-if (on()) watch3d();
+addEventListener(
+	"scroll",
+	() => {
+		scrolled = true;
+		if (on()) watch3d();
+	},
+	{ once: true, passive: true },
+);
 
 export {};
