@@ -83,7 +83,8 @@ function depthAt(line: number) {
 		const b = anchors[i];
 		if (line <= b.y) return a.d + ((line - a.y) / (b.y - a.y)) * (b.d - a.d);
 	}
-	return MAX;
+	// past the last section: stay at its depth
+	return anchors[anchors.length - 1].d;
 }
 
 function ping() {
