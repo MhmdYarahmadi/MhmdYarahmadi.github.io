@@ -1,8 +1,8 @@
 /**
  * Homepage scroll journey. For each world it works out a 0–1 progress from
  * scroll and writes it as --p (CSS does the bars, gauge and XP), toggles .on
- * on the active world and its background layer, updates the nav (colours,
- * progress bar) and the chapter rail, and drives the few
+ * on the active world and its background layer, sets the rail and particle colours, marks
+ * the chapter rail, and drives the few
  * text bits CSS can't: quest checklist, drill bit, panel
  * LEDs, terminal lines and the web pipeline cards.
  *
@@ -22,17 +22,15 @@ const layers = new Map(
 );
 const railLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-rail]")];
 
-// Header colours per world: [text, accent, nav background on desktop, world
-// background]. On phones the worlds scroll under the nav, so it always takes
-// the world background there (see Nav.astro).
-const THEME: Record<string, [string, string, string, string]> = {
-	intro: ["#e8edf2", "#00e5ff", "transparent", "#05070a"],
-	rov: ["#e6f7ff", "#7fd8f0", "transparent", "#062a3d"],
-	school: ["#ede7ff", "#ffd23f", "transparent", "#110d22"],
-	drill: ["#dcebff", "#ff8a3d", "transparent", "#0b2a4a"],
-	iot: ["#a7f3c0", "#a7f3c0", "transparent", "#010302"],
-	web: ["#0f172a", "#0e7490", "transparent", "#eef2f6"],
-	plain: ["#e8edf2", "#00e5ff", "rgba(5, 7, 10, 0.86)", "#05070a"],
+// Rail and particle colours per world: [text, accent].
+const THEME: Record<string, [string, string]> = {
+	intro: ["#e8edf2", "#00e5ff"],
+	rov: ["#e6f7ff", "#7fd8f0"],
+	school: ["#ede7ff", "#ffd23f"],
+	drill: ["#dcebff", "#ff8a3d"],
+	iot: ["#a7f3c0", "#a7f3c0"],
+	web: ["#0f172a", "#0e7490"],
+	plain: ["#e8edf2", "#00e5ff"],
 };
 
 const clamp = (v: number) => Math.max(0, Math.min(1, v));
@@ -134,11 +132,9 @@ function update() {
 		active = next;
 		const world = next.dataset.world!;
 		for (const [name, layer] of layers) layer.classList.toggle("on", name === world);
-		const [fg, acc, navBg, bg] = THEME[world] ?? THEME.plain;
+		const [fg, acc] = THEME[world] ?? THEME.plain;
 		root.style.setProperty("--j-fg", fg);
 		root.style.setProperty("--j-acc", acc);
-		root.style.setProperty("--j-nav-bg", navBg);
-		root.style.setProperty("--j-bg", bg);
 		// the backdrop's particles fade on the light world (journey.css)
 		root.dataset.jworld = world;
 		const id = next.id;
@@ -150,9 +146,6 @@ function update() {
 			else a.removeAttribute("aria-current");
 		}
 	}
-
-	const max = root.scrollHeight - innerHeight;
-	root.style.setProperty("--j-progress", (max > 0 ? scrollY / max : 0).toFixed(4));
 }
 
 const queue = () => {

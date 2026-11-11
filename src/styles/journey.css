@@ -210,79 +210,70 @@ html:not(.js) .w-web { background: #eef2f6; }
 	transform: none;
 }
 
-/* ---- 00 intro ---- */
+/* ---- 00 intro: the homepage's hero (index.astro, deep.css .d-welcome),
+   in the site's base colours, as there ---- */
+.w-intro {
+	--j-hero-glow: rgba(0, 229, 255, 0.24);
+	color: var(--color-text);
+}
+
 .w-intro .j-stick {
 	grid-template-columns: minmax(0, 1fr);
 	align-content: center;
-}
-
-.j-who {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.7rem;
-	font: 500 clamp(13px, 1.1vw, 15px) var(--font-mono);
-	letter-spacing: 0.04em;
-	color: var(--color-accent);
+	gap: 24px;
+	max-width: 84rem;
+	padding: clamp(48px, 8vw, 96px) var(--rail-w) clamp(48px, 8vw, 96px) clamp(16px, 5vw, 72px);
 }
 
 .w-intro h1 {
-	font: 600 clamp(48px, 8vw, 104px) / 0.98 var(--font-display);
+	font: 300 clamp(48px, 8vw, 112px) / 1 "Sora Variable", var(--font-sans);
 	letter-spacing: -0.045em;
 }
 
-.w-intro h1 span {
-	display: block;
+.w-intro h1 strong {
+	font-weight: 700;
+	text-shadow: 0 0 60px var(--j-hero-glow);
 }
 
-.w-intro h1 span + span {
-	color: var(--color-accent);
+.j-hero__role {
+	font: 500 clamp(13px, 1.2vw, 15px) var(--font-mono);
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.j-hero__role span {
+	white-space: nowrap;
 }
 
 .w-intro .j-lede {
-	font-size: clamp(17px, 1.6vw, 20px);
+	max-width: 36rem;
+	font-size: clamp(17px, 1.4vw, 19px);
+	line-height: 1.65;
 	color: var(--color-text-muted);
-	max-width: 34em;
 }
 
-.j-worlds {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	list-style: none;
-	padding: 0;
+.w-intro .j-actions .btn {
+	min-height: 54px;
+	padding: 0 1.7rem;
+	font-size: 1rem;
+	border: 1.5px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+	background: color-mix(in srgb, var(--color-bg-elevated) 80%, transparent);
+	transition: border-color 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease, translate 0.2s var(--ease-out);
 }
 
-.j-worlds a {
-	min-height: 36px;
-	transition: border-color 0.2s ease;
+.w-intro .j-actions .btn:hover {
+	translate: 0 -2px;
 }
 
-.j-worlds a:hover {
+.w-intro .j-actions .btn--primary {
 	border-color: var(--color-accent);
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+	box-shadow: 0 0 0 4px var(--color-accent-soft), 0 8px 40px var(--j-hero-glow);
 }
 
-.j-worlds i {
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-}
-
-.j-cue {
-	display: flex;
-	align-items: center;
-	gap: 14px;
-	margin-top: 24px;
-	font: 12px var(--font-mono);
-	letter-spacing: 0.12em;
-	color: #8a96a6;
-}
-
-.nudge {
-	animation: j-nudge 1.6s ease-in-out infinite;
-}
-
-@keyframes j-nudge {
-	50% { transform: translateY(6px); }
+.w-intro .j-actions .btn--primary:hover {
+	box-shadow: 0 0 0 6px var(--color-accent-soft), 0 10px 48px var(--j-hero-glow);
 }
 
 /* ---- 01 ROV ---- */
@@ -1377,7 +1368,6 @@ html:not(.js) .w-web { background: #eef2f6; }
 	}
 
 	.blink,
-	.nudge,
 	.levelup {
 		animation: none;
 	}

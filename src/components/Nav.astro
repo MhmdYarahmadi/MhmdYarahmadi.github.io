@@ -1,13 +1,5 @@
 ---
 import { url } from "../lib/url";
-interface Props {
-	/** The homepage journey: adds the progress bar, and
-	    lets the header take its colours from the active world. */
-	journey?: boolean;
-}
-
-const { journey = false } = Astro.props;
-
 const links = [
 	// Root-relative so the links also work from project pages.
 	{ href: url("/projects/"), label: "Projects" },
@@ -16,8 +8,7 @@ const links = [
 ];
 ---
 
-<header class:list={["nav", { "nav--journey": journey }]}>
-	{journey && <div class="nav__progress" id="j-progress" aria-hidden="true"></div>}
+<header class="nav">
 	<div class="nav__inner">
 		<a href={url("/#top")} class="nav__brand">mohammad yarahmadi<span>_</span></a>
 		<nav aria-label="Primary">
@@ -51,28 +42,6 @@ const links = [
 		transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease;
 	}
 
-	/* On the homepage the worlds show through; journey.ts sets the colours. */
-	.nav--journey {
-		position: fixed;
-		inset: 0 0 auto;
-		--nav-fg: var(--j-fg, var(--color-text));
-		--nav-acc: var(--j-acc, var(--color-accent));
-		/* solid again over the plain sections (journey.ts sets --j-nav-bg) */
-		background: var(--j-nav-bg, transparent);
-		backdrop-filter: none;
-		border-bottom-color: transparent;
-	}
-
-	.nav__progress {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 3px;
-		width: 100%;
-		transform-origin: left;
-		transform: scaleX(var(--j-progress, 0));
-		background: var(--nav-acc);
-	}
 
 	.nav__inner {
 		display: flex;
@@ -140,11 +109,4 @@ const links = [
 		}
 	}
 
-	/* Stacked worlds scroll under the nav, so it needs a background. */
-	@media (max-width: 900px) {
-		.nav--journey {
-			background: color-mix(in srgb, var(--j-bg, var(--color-bg)) 90%, transparent);
-			backdrop-filter: blur(10px);
-		}
-	}
 </style>
