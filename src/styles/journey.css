@@ -32,93 +32,113 @@
 	opacity: 1;
 }
 
+/* the homepage's dark sea */
 .bg-intro,
 .bg-plain {
-	background-color: var(--color-bg);
-	background-image:
-		radial-gradient(circle at 78% 28%, var(--color-accent-soft), transparent 42%),
-		linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-	background-size: auto, 48px 48px, 48px 48px;
+	background:
+		radial-gradient(circle at 85% 0%, rgba(0, 229, 255, 0.12), transparent 45%),
+		radial-gradient(circle at 5% 95%, rgba(0, 229, 255, 0.06), transparent 40%),
+		#05070a;
 }
 
+/* the worlds: the same layers as each project on /projects/ (deep.css) */
 .bg-rov {
-	background: linear-gradient(180deg, #0e4a66 0%, #062a3d 45%, #010910 100%);
+	background: linear-gradient(180deg, #0b3550 0%, #06223a 35%, #031426 70%, #01070f 100%);
 }
 
-.bg-rov .rays {
+.bg-rov__photo {
+	position: absolute;
+	inset: 0 0 auto;
+	width: 100%;
+	height: 75vh;
+	object-fit: cover;
+	opacity: 0.3;
+	mix-blend-mode: screen;
+	mask-image: linear-gradient(180deg, #000 30%, transparent);
+}
+
+.bg-rays {
 	position: absolute;
 	top: 0;
-	left: 18%;
-	width: 64%;
-	height: 75%;
-	background: repeating-linear-gradient(100deg, rgba(160, 225, 255, 0.07) 0 38px, transparent 38px 120px);
-	mask-image: linear-gradient(to bottom, #000, transparent);
-}
-
-.bg-rov .dark {
-	position: absolute;
-	inset: 0;
-	background: #000;
-	opacity: calc(var(--p-rov, 0) * 0.55);
-}
-
-.bubble {
-	position: absolute;
-	bottom: -20px;
-	border-radius: 50%;
-	border: 1px solid rgba(190, 235, 255, 0.55);
-	animation: j-rise 9s linear infinite;
-}
-
-@keyframes j-rise {
-	0% { transform: translateY(0); opacity: 0; }
-	10% { opacity: 0.7; }
-	100% { transform: translateY(-110vh); opacity: 0; }
+	left: 25%;
+	right: 25%;
+	height: 90vh;
+	background: linear-gradient(180deg, rgba(180, 240, 255, 0.16), transparent);
+	transform: skewX(-12deg);
+	filter: blur(30px);
 }
 
 .bg-school {
-	background-color: #110d22;
-	background-image:
-		linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-	background-size: 24px 24px;
-}
-
-.bg-school span {
-	position: absolute;
+	background:
+		radial-gradient(circle at 80% 10%, rgba(255, 92, 138, 0.18), transparent 40%),
+		radial-gradient(circle at 15% 80%, rgba(255, 210, 63, 0.1), transparent 40%),
+		linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 32px 32px,
+		linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 32px 32px,
+		#120d24;
 }
 
 .bg-drill {
-	background-color: #0b2a4a;
-	background-image:
-		linear-gradient(rgba(170, 205, 255, 0.16) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(170, 205, 255, 0.16) 1px, transparent 1px),
-		linear-gradient(rgba(170, 205, 255, 0.07) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(170, 205, 255, 0.07) 1px, transparent 1px);
-	background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+	background:
+		linear-gradient(rgba(156, 200, 255, 0.14) 1px, transparent 1px) 0 0 / 120px 120px,
+		linear-gradient(90deg, rgba(156, 200, 255, 0.14) 1px, transparent 1px) 0 0 / 120px 120px,
+		linear-gradient(rgba(156, 200, 255, 0.06) 1px, transparent 1px) 0 0 / 24px 24px,
+		linear-gradient(90deg, rgba(156, 200, 255, 0.06) 1px, transparent 1px) 0 0 / 24px 24px,
+		linear-gradient(180deg, #0f355c, #0b2a4a 60%, #08203a);
 }
 
 .bg-iot {
-	background-color: #010302;
-	background-image:
-		radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.75) 100%),
-		repeating-linear-gradient(0deg, rgba(167, 243, 192, 0.035) 0 1px, transparent 1px 4px);
+	background:
+		repeating-linear-gradient(0deg, rgba(124, 242, 156, 0.035) 0 1px, transparent 1px 4px),
+		radial-gradient(ellipse at 50% 30%, rgba(124, 242, 156, 0.1), transparent 60%),
+		#020604;
 }
 
 .bg-web {
-	background-color: #eef2f6;
-	background-image: radial-gradient(rgba(15, 23, 42, 0.07) 1px, transparent 1px);
-	background-size: 22px 22px;
+	background:
+		radial-gradient(circle at 85% 0%, rgba(99, 102, 241, 0.12), transparent 40%),
+		radial-gradient(circle at 0% 60%, rgba(14, 116, 144, 0.1), transparent 45%),
+		linear-gradient(180deg, #ffffff, #eef2f6 50%, #e6ecf3);
+}
+
+.bg-web .bg-rays {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), transparent);
+}
+
+/* glowing particles, as on the main site, in the active world's accent */
+.j-particle {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	width: var(--s);
+	height: var(--s);
+	border-radius: 50%;
+	background: var(--j-acc, #00e5ff);
+	box-shadow: 0 0 calc(var(--s) * 3) var(--j-acc, #00e5ff);
+	opacity: 0.6;
+	animation: j-rise var(--dur) linear var(--delay) infinite;
+	transition: background-color 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
+}
+
+/* fainter and flat on the light Websites & Enterprise world */
+:root[data-jworld="web"] .j-particle {
+	opacity: 0.25;
+	box-shadow: none;
+}
+
+@keyframes j-rise {
+	from { translate: 0 30vh; opacity: 0; }
+	15% { opacity: 0.7; }
+	85% { opacity: 0.7; }
+	to { translate: 2vw -40vh; opacity: 0; }
 }
 
 /* No JS: no fixed layers; each world paints its own background. */
 html:not(.js) .j-backdrop { display: none; }
 html:not(.js) .w-intro { background: var(--color-bg); }
-html:not(.js) .w-rov { background: linear-gradient(180deg, #0e4a66, #010910); }
-html:not(.js) .w-school { background: #110d22; }
+html:not(.js) .w-rov { background: linear-gradient(180deg, #0b3550, #01070f); }
+html:not(.js) .w-school { background: #120d24; }
 html:not(.js) .w-drill { background: #0b2a4a; }
-html:not(.js) .w-iot { background: #010302; }
+html:not(.js) .w-iot { background: #020604; }
 html:not(.js) .w-web { background: #eef2f6; }
 
 /* ---- worlds ---- */
@@ -1355,7 +1375,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 		animation: none;
 	}
 
-	.bubble {
-		display: none;
+	.j-particle {
+		animation: none;
 	}
 }

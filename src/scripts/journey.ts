@@ -71,9 +71,6 @@ const STAGES = ["Lead", "Scoping", "Build", "Live"];
 const termLines = [...(q("[data-term]")?.children ?? [])].slice(0, -1) as HTMLElement[];
 
 const DETAILS: Record<string, (p: number) => void> = {
-	rov(p) {
-		root.style.setProperty("--p-rov", p.toFixed(3));
-	},
 	school(p) {
 		const done = Math.min(questItems.length, Math.floor(p * 4.4));
 		questItems.forEach((li, i) => li.classList.toggle("done", i < done));
@@ -143,11 +140,13 @@ function update() {
 		root.style.setProperty("--j-acc", acc);
 		root.style.setProperty("--j-nav-bg", navBg);
 		root.style.setProperty("--j-bg", bg);
+		// the backdrop's particles fade on the light world (journey.css)
+		root.dataset.jworld = world;
 		if (pill) pill.textContent = next.dataset.chapter ?? "";
 		const id = next.id;
 		// Skills has no rail entry; it belongs with About. A world's notes
-		// (#<world>-notes) belong with the world, and the dive with the ROV.
-		const railId = id === "skills" ? "about" : id === "dive" ? "rov" : id.replace(/-notes$/, "");
+		// (#<world>-notes) belong with the world.
+		const railId = id === "skills" ? "about" : id.replace(/-notes$/, "");
 		for (const a of railLinks) {
 			if (a.dataset.rail === railId) a.setAttribute("aria-current", "true");
 			else a.removeAttribute("aria-current");
