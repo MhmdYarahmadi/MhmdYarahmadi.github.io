@@ -1,15 +1,15 @@
 ---
 title: "Gamified School"
-summary: "A learning platform I built with AI for the college students I was teaching, with courses on Git, Docker, PostgreSQL and system design."
-role: "Teacher · built with AI"
+summary: "A hands-on learning platform for the college students I was teaching, with Docker and PostgreSQL simulated in the app and courses on Git, Docker, PostgreSQL and system design."
+role: "Teacher and builder"
 tags: ["education", "AI-assisted", "Git", "Docker (simulated)", "PostgreSQL (simulated)", "system design"]
 hasDemo: false
 order: 20
 ---
 
 A learning platform that turns programming concepts into quests. I built it
-with AI for the college students I was teaching, so they could practise
-real tools hands-on, with nothing to install.
+for the college students I was teaching, so they could practise real tools
+hands-on, with nothing to install.
 
 ### Courses
 

@@ -890,6 +890,14 @@ html:not(.js) .w-web { background: #eef2f6; }
 	overflow-wrap: anywhere;
 }
 
+.tiles small {
+	display: block;
+	margin-top: 2px;
+	font: 500 12px var(--font-mono);
+	color: #475569;
+	text-decoration: line-through;
+}
+
 .pipe__cols {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));

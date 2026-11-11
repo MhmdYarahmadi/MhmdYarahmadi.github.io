@@ -24,17 +24,17 @@ const stack = [
 	},
 	{
 		layer: "Edge Linux",
-		what: "Raspberry Pi: decoding commands, serial links to the microcontroller",
-		used: [["ROV", href.rov]],
+		what: "Raspberry Pi 5 and Jetson Nano: decoding commands, serial links to the microcontrollers",
+		used: [["ROV", href.rov], ["Drilling Simulation", href.drill]],
 	},
 	{
 		layer: "Networking & video",
-		what: "UDP control links, IP networks over a tether, IP camera video, cellular uplinks",
+		what: "UDP control links, IP networks over a tether, RTSP camera video, a Python/Qt control app, cellular uplinks",
 		used: [["ROV", href.rov], ["Camera", href.iot]],
 	},
 	{
 		layer: "Web & business software",
-		what: "Company websites, Odoo ERP and CRM, 3D in the browser with Three.js",
+		what: "Odoo ERP and CRM with custom modules that bring IoT data in, company websites, 3D in the browser with Three.js",
 		used: [["Websites & Enterprise", href.web], ["Gamified School", href.school]],
 	},
 ];
@@ -68,7 +68,7 @@ const stack = [
 			}
 		</ol>
 		<p class="h-learning">
-			<span class="h-dot" aria-hidden="true"></span> Currently learning: how LLM systems are built and used.
+			<span class="h-dot" aria-hidden="true"></span> Now building: Engram, a small on-device language model with a knowledge module, so new knowledge can be added right on a phone.
 		</p>
 	</div>
 </section>

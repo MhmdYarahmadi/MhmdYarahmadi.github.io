@@ -2,9 +2,9 @@
 // Each build links to its write-up below the world (Notes.astro); the camera
 // and sous vide ones carry their live demos.
 const builds = [
-	["backup-power-camera", "ESP32-CAM wireless camera", "A wireless camera that keeps recording through a power cut, with battery backup and a SIM uplink.", "Details + live diagram ↓"],
+	["backup-power-camera", "ESP32-CAM wireless camera", "A security camera that stays up through power cuts: a battery takes over from the mains, and a SIM uplink keeps it online when the local internet drops too.", "Details + live diagram ↓"],
 	["sous-vide", "Sous vide controller", "A personal project: a temperature controller for sous vide cooking.", "Details + live demo ↓"],
-	["ac-remote", "Smart AC remote", "An ESP32-based smart remote for the air conditioner.", "Details ↓"],
+	["ac-remote", "Smart AC remote", "An ESP32 infrared bridge that sends the air conditioner's remote commands, so the AC can be controlled over the network.", "Details ↓"],
 ];
 const lines: [string, boolean][] = [
 	["$ iot --list", true],

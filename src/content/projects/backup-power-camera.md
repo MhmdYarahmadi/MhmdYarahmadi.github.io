@@ -9,8 +9,9 @@ demoComponent: "CameraSystemDiagram"
 order: 50
 ---
 
-A camera that keeps working through power outages, the moment security
-cameras are most needed and most likely to go dark.
+A security camera built to stay up through power outages, exactly when
+ordinary cameras go dark: battery backup takes over from the mains, and a
+cellular uplink takes over from the local internet.
 
 ### How it works
 
