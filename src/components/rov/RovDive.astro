@@ -5,12 +5,14 @@ import "../../styles/rov.css";
 // The ROV's full dive, shared by /projects/ and /journey/: scroll takes it
 // from the surface to 30 m (src/scripts/deepDive.ts drives the depth gauge,
 // water colour, captions and footage, and lazy-loads the 3D scene from
-// src/scripts/descentScene.ts). Extra attributes (e.g. the journey's
-// data-world and data-chapter) go on the section.
+// src/scripts/descentScene.ts). Extra attributes go on the section.
 ---
 
 <section class="d-dive" id="dive" aria-labelledby="dive-title" {...Astro.props}>
-	<video class="d-dive__deep" id="d-deepbg" src={url("/media/rov-deep.mp4")} poster={url("/media/rov-deep.jpg")} muted loop playsinline preload="none" aria-hidden="true"></video>
+	<video class="d-dive__deep" id="d-deepbg" poster={url("/media/rov-deep.jpg")} muted loop playsinline preload="none" aria-hidden="true">
+		<source src={url("/media/rov-deep.webm")} type="video/webm; codecs=av01.0.04M.08" />
+		<source src={url("/media/rov-deep.mp4")} type="video/mp4" />
+	</video>
 	<div class="d-dive__layout">
 		<div class="d-dive__story">
 			<section class="d-sec" data-depth="0" data-cap="At the surface">
