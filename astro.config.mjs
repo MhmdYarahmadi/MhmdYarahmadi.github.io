@@ -11,10 +11,17 @@ export default defineConfig({
   site: 'https://mhmdyarahmadi.github.io',
   base: '/',
   integrations: [react()],
+  // The site is one page now (src/pages/index.astro). The old pages send
+  // anyone with an old link to the matching place on it.
+  redirects: {
+    '/journey': '/',
+    '/projects': '/#rov',
+    '/projects/rov': '/#rov',
+  },
   vite: {
     build: {
       // three.js is ~620 KB minified (160 KB gzip). It is only ever loaded
-      // through a dynamic import on the ROV page, so the default 500 KB
+      // through a dynamic import for the ROV dive, so the default 500 KB
       // warning is expected noise.
       chunkSizeWarningLimit: 700,
     },

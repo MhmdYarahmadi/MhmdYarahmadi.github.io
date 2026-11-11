@@ -1,8 +1,8 @@
 ---
 import { url } from "../../lib/url";
 // Fixed background layers behind the worlds, in the main site's style: the
-// homepage's dark sea for the intro and the plain sections, and the same
-// layer each project has on /projects/. journey.ts fades in the one matching
+// dark sea for the intro and the plain sections, and one layer per project.
+// journey.ts fades in the one matching
 // the active world (data-layer = the world's data-world); the glowing
 // particles take the world's accent colour (--j-acc).
 const particles = Array.from({ length: 18 }, (_, i) => ({

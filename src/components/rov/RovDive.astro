@@ -2,12 +2,12 @@
 import { url } from "../../lib/url";
 import "../../styles/rov.css";
 
-// The ROV's full dive, shared by /projects/ and /journey/: scroll takes it
+// The ROV's full dive, on the homepage: scroll takes it
 // from the surface to 30 m (src/scripts/deepDive.ts drives the depth gauge,
 // water colour, captions and footage, and lazy-loads the 3D scene from
 // src/scripts/descentScene.ts). Extra attributes go on the section.
 interface Props {
-	// a shorter opening, for /journey/, where the ROV's world just introduced it
+	// a shorter opening, for the homepage, where the ROV's world just introduced it
 	brief?: boolean;
 	[attr: string]: unknown;
 }

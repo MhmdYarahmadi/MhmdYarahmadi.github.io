@@ -1,13 +1,9 @@
 /**
- * The ROV's full dive (RovDive.astro, on /projects/ and /journey/): the ROV
- * project page rebuilt in the deep style. Maps scroll through the dive section to 0–30 m and drives the
- * depth gauge, water colour, captions, pings and footage, like descent.ts
- * does on the ROV page. The 3D scene from that page (descentScene.ts) loads
- * the first time the dive comes near the screen; until then, and with
- * reduced motion, the stage shows a still image.
- *
- * On /projects/ everything sleeps while another project is picked (the
- * section is display: none then); on /journey/ there is no picker.
+ * The ROV's full dive (RovDive.astro, on the homepage). Maps scroll through
+ * the dive section to depth and drives the depth gauge, water colour,
+ * captions, pings and footage. The 3D scene (descentScene.ts) loads the first
+ * time the dive comes near the screen after the visitor scrolls; until then,
+ * and with reduced motion, the stage shows a still image.
  */
 
 const MAX = 30;
@@ -24,12 +20,10 @@ const marker = document.getElementById("d-g-marker")!;
 const read = document.getElementById("d-g-read")!;
 const deepbg = document.getElementById("d-deepbg") as HTMLVideoElement;
 const feed = document.getElementById("d-feed") as HTMLVideoElement;
-const rovPicked = document.getElementById("vibe-rov") as HTMLInputElement | null;
 
-const on = () => !rovPicked || rovPicked.checked;
 let depth = 0;
 
-// Water colour by depth, as on the ROV page: teal → blue-green → near-black.
+// Water colour by depth: teal → blue-green → near-black.
 const STOPS: [number, number[]][] = [
 	[0, [0x1f, 0x6a, 0x86]],
 	[5, [0x1a, 0x5e, 0x78]],
@@ -70,7 +64,6 @@ for (let m = 0; m <= MAX; m++) {
 // of the screen; depth is interpolated between sections.
 let anchors: { y: number; d: number }[] = [];
 function measure() {
-	if (!on()) return;
 	anchors = sections.map((s) => {
 		const r = s.getBoundingClientRect();
 		return { y: r.top + scrollY + Math.min(r.height, innerHeight) * 0.5, d: Number(s.dataset.depth) };
@@ -99,7 +92,6 @@ let active = -1;
 let queued = false;
 function update() {
 	queued = false;
-	if (!on()) return;
 	const line = scrollY + innerHeight * 0.5;
 	const d = Math.max(0, Math.min(MAX, depthAt(line)));
 	depth = d;
@@ -152,14 +144,6 @@ document.fonts?.ready.then(() => {
 	measure();
 	queue();
 });
-document.addEventListener("deep:change", () => {
-	// the mood changes the page's height above and inside the dive
-	requestAnimationFrame(() => {
-		measure();
-		queue();
-		if (on()) watch3d();
-	});
-});
 
 // ---- camera footage: plays only while on screen; manual with reduced motion ----
 if (reduced.matches) feed.controls = true;
@@ -172,9 +156,8 @@ new IntersectionObserver(
 ).observe(feed);
 
 // ---- 3D: loaded the first time the dive comes near the screen ----
-// Not before the visitor first scrolls: on /projects/ the dive starts just
-// below the fold, so someone who only opens the page (or picks another
-// project) never downloads the ~650 KB of three.js and model.
+// Not before the visitor first scrolls, so someone who only opens the page
+// never downloads the ~650 KB of three.js and model.
 let scrolled = false;
 let loading = false;
 let watcher: IntersectionObserver | null = null;
@@ -219,7 +202,7 @@ addEventListener(
 	"scroll",
 	() => {
 		scrolled = true;
-		if (on()) watch3d();
+		watch3d();
 	},
 	{ once: true, passive: true },
 );

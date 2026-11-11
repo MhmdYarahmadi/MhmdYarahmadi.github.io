@@ -1,7 +1,7 @@
-/* A project's write-up (src/components/ProjectDetail.astro), shared by
-   /projects/ and /journey/. Colours come from the page's --color-* tokens,
-   so each project's theme carries over; --d-display and --d-card are set by
-   deep.css on /projects/ and fall back to the site defaults elsewhere. */
+/* A project's write-up (src/components/ProjectDetail.astro) in a world's
+   notes. Colours come from the --color-* tokens each world's notes set
+   (journey.css), so each project's theme carries over; --d-display and
+   --d-card fall back to the site defaults. */
 
 .d-detail {
 	display: grid;

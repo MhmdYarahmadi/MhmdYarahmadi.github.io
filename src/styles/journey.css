@@ -58,7 +58,7 @@ body:has(.journey) .footer__inner {
 		#05070a;
 }
 
-/* the worlds: the same layers as each project on /projects/ (deep.css) */
+/* the worlds' background layers */
 .bg-rov {
 	background: linear-gradient(180deg, #0b3550 0%, #06223a 35%, #031426 70%, #01070f 100%);
 }
@@ -227,8 +227,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 	transform: none;
 }
 
-/* ---- 00 intro: the homepage's hero (index.astro, deep.css .d-welcome),
-   in the site's base colours, as there ---- */
+/* ---- 00 intro: the hero, in the site's base colours ---- */
 .w-intro {
 	--j-hero-glow: rgba(0, 229, 255, 0.24);
 	color: var(--color-text);
@@ -317,7 +316,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 }
 
 .rov-spec {
-	/* the spec sheet's tokens, as for the ROV on /projects/ */
+	/* the spec sheet's tokens */
 	--color-bg-elevated: #06223a;
 	--color-text: #e4f3f7;
 	--color-text-muted: #b6ced7;
@@ -1125,7 +1124,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 /* ---- a world's write-ups (Notes.astro) ----
    Right after each world, on its background, in a card that takes the
    world's colours. The --color-* tokens are redefined per world so the
-   write-up and the live demos inside it match, as on /projects/. */
+   write-up and the live demos inside it match. */
 .j-notes {
 	position: relative;
 	z-index: 1;

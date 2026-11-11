@@ -1,5 +1,12 @@
 # Handoff: Mohyar's portfolio website
 
+> **Current state (2026-11-11):** the site is one page. The scroll journey is the homepage
+> (`src/pages/index.astro`). The old homepage, `/projects/` and `/projects/rov/` were removed,
+> and the old URLs (`/journey/`, `/projects/`, `/projects/rov/`) redirect to it (`redirects` in
+> `astro.config.mjs`). The ROV's 3D dive lives on in `RovDive.astro`, `deepDive.ts` and
+> `descentScene.ts`. Repo: MhmdYarahmadi/MhmdYarahmadi.github.io, deployed by GitHub Actions.
+> Parts of this file below describe the earlier multi-page site.
+
 Paste this whole file into a new chat to continue the work. Written 2026-10-16.
 
 ---

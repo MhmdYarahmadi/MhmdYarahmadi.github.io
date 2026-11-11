@@ -1,4 +1,4 @@
-/* The ROV, shared by /projects/ and /journey/: the spec sheet
+/* The ROV, on the homepage: the spec sheet
    (RovSpec.astro) and the full dive (RovDive.astro, driven by
    src/scripts/deepDive.ts). The dive sets its own ocean colours, so it
    looks the same on any page; the spec sheet takes the page's --color-*
@@ -493,7 +493,7 @@
 	color: var(--muted);
 }
 
-/* labelled, so it isn't mistaken for /journey/'s chapter rail */
+/* labelled, so it isn't mistaken for the chapter rail */
 .d-gauge__cap {
 	position: absolute;
 	right: 0;
