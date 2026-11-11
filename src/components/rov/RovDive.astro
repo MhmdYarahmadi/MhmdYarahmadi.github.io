@@ -6,9 +6,15 @@ import "../../styles/rov.css";
 // from the surface to 30 m (src/scripts/deepDive.ts drives the depth gauge,
 // water colour, captions and footage, and lazy-loads the 3D scene from
 // src/scripts/descentScene.ts). Extra attributes go on the section.
+interface Props {
+	// a shorter opening, for /journey/, where the ROV's world just introduced it
+	brief?: boolean;
+	[attr: string]: unknown;
+}
+const { brief = false, ...attrs } = Astro.props;
 ---
 
-<section class="d-dive" id="dive" aria-labelledby="dive-title" {...Astro.props}>
+<section class="d-dive" id="dive" aria-labelledby="dive-title" {...attrs}>
 	<video class="d-dive__deep" id="d-deepbg" poster={url("/media/rov-deep.jpg")} muted loop playsinline preload="none" aria-hidden="true">
 		<source src={url("/media/rov-deep.webm")} type="video/webm; codecs=av01.0.04M.08" />
 		<source src={url("/media/rov-deep.mp4")} type="video/mp4" />
@@ -17,11 +23,17 @@ import "../../styles/rov.css";
 		<div class="d-dive__story">
 			<section class="d-sec" data-depth="0" data-cap="At the surface">
 				<h2 id="dive-title">The full dive</h2>
-				<p class="d-lede">
-					A tethered underwater vehicle driven with a controller. I built the whole chain,
-					from the controller on the laptop down to the thrusters, and the network that brings
-					the camera video back up. Scroll to take it down to 30 m.
-				</p>
+				{
+					brief ? (
+						<p class="d-lede">Scroll to take it down. Each stop on the way is one part of the build.</p>
+					) : (
+						<p class="d-lede">
+							A tethered underwater vehicle driven with a controller. I built the whole chain,
+							from the controller on the laptop down to the thrusters, and the network that brings
+							the camera video back up. Scroll to take it down to 30 m.
+						</p>
+					)
+				}
 				<p class="d-muted">Networking, embedded, controls</p>
 			</section>
 
@@ -111,6 +123,7 @@ import "../../styles/rov.css";
 				<span class="d-stage__status" id="d-status" role="status"></span>
 				<span class="d-stage__cap" id="d-cap">At the surface</span>
 				<div class="d-gauge" id="d-gauge">
+					<div class="d-gauge__cap">Depth</div>
 					<div class="d-gauge__rail"></div>
 					<div class="d-gauge__marker" id="d-g-marker"></div>
 					<div class="d-gauge__read" id="d-g-read">0.0 m</div>

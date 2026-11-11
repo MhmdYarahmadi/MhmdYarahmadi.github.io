@@ -105,6 +105,11 @@ function update() {
 	depth = d;
 	// the gauge appears once the dive itself starts
 	stage.classList.toggle("surface", !anchors.length || line < anchors[0].y - innerHeight * 0.4);
+	// the stage (model, caption, gauge) fades out as the dive's end scrolls up,
+	// so it doesn't hang over whatever comes next
+	const end = dive.getBoundingClientRect().bottom;
+	const fade = Math.max(0, Math.min(1, (end - innerHeight * 0.5) / (innerHeight * 0.45)));
+	dive.style.setProperty("--fade", fade.toFixed(3));
 	const water = `rgb(${waterAt(d).join(", ")})`;
 	// the 3D scene reads its fog colour from :root
 	root.style.setProperty("--water", water);

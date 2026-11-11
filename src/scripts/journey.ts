@@ -20,17 +20,29 @@ const worlds = chapters.filter((el) => el.classList.contains("j-scene"));
 const layers = new Map(
 	[...document.querySelectorAll<HTMLElement>("[data-layer]")].map((el) => [el.dataset.layer!, el]),
 );
+const rail = document.querySelector<HTMLElement>(".j-rail");
+const railList = rail?.querySelector("ul");
 const railLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-rail]")];
 
-// Rail and particle colours per world: [text, accent].
-const THEME: Record<string, [string, string]> = {
-	intro: ["#e8edf2", "#00e5ff"],
-	rov: ["#e6f7ff", "#7fd8f0"],
-	school: ["#ede7ff", "#ffd23f"],
-	drill: ["#dcebff", "#ff8a3d"],
-	iot: ["#a7f3c0", "#a7f3c0"],
-	web: ["#0f172a", "#0e7490"],
-	plain: ["#e8edf2", "#00e5ff"],
+// The dive has its own depth gauge beside the rail: dim the rail while the
+// dive fills the screen, so the two don't read as one control.
+const dive = document.getElementById("dive");
+if (rail && dive) {
+	new IntersectionObserver(([e]) => rail.classList.toggle("dim", e.isIntersecting), {
+		rootMargin: "-40% 0px -40% 0px",
+	}).observe(dive);
+}
+
+// Rail and particle colours per world: [text, accent, background]. The
+// background is for the phone chapter strip.
+const THEME: Record<string, [string, string, string]> = {
+	intro: ["#e8edf2", "#00e5ff", "#05070a"],
+	rov: ["#e6f7ff", "#7fd8f0", "#06263a"],
+	school: ["#ede7ff", "#ffd23f", "#120d24"],
+	drill: ["#dcebff", "#ff8a3d", "#0b2a4a"],
+	iot: ["#a7f3c0", "#a7f3c0", "#020604"],
+	web: ["#0f172a", "#0e7490", "#eef2f6"],
+	plain: ["#e8edf2", "#00e5ff", "#05070a"],
 };
 
 const clamp = (v: number) => Math.max(0, Math.min(1, v));
@@ -132,9 +144,10 @@ function update() {
 		active = next;
 		const world = next.dataset.world!;
 		for (const [name, layer] of layers) layer.classList.toggle("on", name === world);
-		const [fg, acc] = THEME[world] ?? THEME.plain;
+		const [fg, acc, bg] = THEME[world] ?? THEME.plain;
 		root.style.setProperty("--j-fg", fg);
 		root.style.setProperty("--j-acc", acc);
+		root.style.setProperty("--j-bg", bg);
 		// the backdrop's particles fade on the light world (journey.css)
 		root.dataset.jworld = world;
 		const id = next.id;
@@ -142,8 +155,16 @@ function update() {
 		// (#<world>-notes) belong with the world.
 		const railId = id === "skills" ? "about" : id.replace(/-notes$/, "");
 		for (const a of railLinks) {
-			if (a.dataset.rail === railId) a.setAttribute("aria-current", "true");
-			else a.removeAttribute("aria-current");
+			if (a.dataset.rail !== railId) {
+				a.removeAttribute("aria-current");
+				continue;
+			}
+			a.setAttribute("aria-current", "true");
+			// phones: keep the current chapter in view in the scrolling strip
+			if (stacked.matches && railList) {
+				const left = a.offsetLeft - (railList.clientWidth - a.offsetWidth) / 2;
+				railList.scrollTo({ left, behavior: reduced.matches ? "auto" : "smooth" });
+			}
 		}
 	}
 }

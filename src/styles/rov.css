@@ -404,6 +404,8 @@
 /* The 3D stage: sticky beside the story, with its own depth gauge */
 .d-dive__stagecol {
 	min-width: 0;
+	/* deepDive.ts fades it out as the dive ends */
+	opacity: var(--fade, 1);
 }
 
 .d-stage {
@@ -489,6 +491,17 @@
 	width: 84px;
 	font: 11px var(--font-mono);
 	color: var(--muted);
+}
+
+/* labelled, so it isn't mistaken for /journey/'s chapter rail */
+.d-gauge__cap {
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 14px);
+	color: var(--hi);
+	font: 600 10px var(--font-mono);
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
 }
 
 .d-gauge__rail {

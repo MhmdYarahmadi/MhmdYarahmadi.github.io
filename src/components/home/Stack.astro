@@ -57,7 +57,7 @@ const stack = [
 			{
 				stack.map((s, i) => (
 					<li>
-						<span class="h-stack__n" aria-hidden="true">{String(stack.length - i).padStart(2, "0")}</span>
+						<span class="h-stack__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
 						<h3>{s.layer}</h3>
 						<p>{s.what}</p>
 						<ul class="h-stack__used" aria-label="Used in">

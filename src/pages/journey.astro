@@ -46,15 +46,15 @@ const about = "About the project";
 		{/* the nav's Work link lands on the first world */}
 		<span id="work" aria-hidden="true"></span>
 		<SceneRov />
-		<RovDive />
+		<RovDive brief />
 		<SceneSchool />
-		<Notes scene="school" world="school" chapter="02 · Gamified School · Notes" label="About the Gamified School" projects={[school]} title={about} />
+		<Notes scene="school" world="school" chapter="02 · Gamified School · Notes" label="About the Gamified School" projects={[school]} title={about} repeatsLede />
 		<SceneDrill />
 		<Notes scene="drilling" world="drill" chapter="03 · Drilling sim · Notes" label="About the Drilling Simulation" projects={[drill]} title={about} />
 		<SceneIot />
 		<Notes scene="iot" world="iot" chapter="04 · IoT builds · Notes" label="About the IoT builds" projects={iot} />
 		<SceneWeb />
-		<Notes scene="web" world="web" chapter="05 · Websites & Enterprise · Notes" label="About Websites and Enterprise" projects={[web]} title={about}>
+		<Notes scene="web" world="web" chapter="05 · Websites & Enterprise · Notes" label="About Websites and Enterprise" projects={[web]} title={about} repeatsLede>
 			<div class="j-notes__demo">
 				<p class="j-notes__eyebrow">Try it · a sales pipeline with made-up deals</p>
 				<SalesPipeline client:visible />

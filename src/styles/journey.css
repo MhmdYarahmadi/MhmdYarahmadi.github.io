@@ -7,7 +7,12 @@
 
 .journey {
 	--stage-pad-top: 96px;
-	--rail-w: 140px;
+	/* room kept clear for the chapter rail and its labels */
+	--rail-w: 160px;
+	/* one left edge and width for every section: worlds, notes, the dive
+	   (rov.css uses the same values), skills, about and contact */
+	--j-gutter: clamp(16px, 5vw, 72px);
+	--j-max: 84rem;
 	position: relative;
 }
 
@@ -163,9 +168,9 @@ html:not(.js) .w-web { background: #eef2f6; }
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	gap: clamp(32px, 4vw, 64px);
 	align-items: center;
-	max-width: 1440px;
+	max-width: var(--j-max);
 	margin-inline: auto;
-	padding: var(--stage-pad-top) var(--rail-w) 48px clamp(16px, 8vw, 120px);
+	padding: var(--stage-pad-top) var(--rail-w) 48px var(--j-gutter);
 }
 
 .j-copy {
@@ -221,8 +226,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 	grid-template-columns: minmax(0, 1fr);
 	align-content: center;
 	gap: 24px;
-	max-width: 84rem;
-	padding: clamp(48px, 8vw, 96px) var(--rail-w) clamp(48px, 8vw, 96px) clamp(16px, 5vw, 72px);
+	padding: clamp(48px, 8vw, 96px) var(--rail-w) clamp(48px, 8vw, 96px) var(--j-gutter);
 }
 
 .w-intro h1 {
@@ -942,10 +946,28 @@ html:not(.js) .w-web { background: #eef2f6; }
 	background: var(--color-bg);
 }
 
+/* a soft fade from the last world into the plain sections, not a hard edge */
+.j-plain::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 100%;
+	height: 120px;
+	background: linear-gradient(transparent, var(--color-bg));
+	pointer-events: none;
+}
+
+/* skills and about (home.css) on the journey's left edge */
+.journey .h-wrap {
+	max-width: var(--j-max);
+	padding-inline: var(--j-gutter) var(--rail-w);
+}
+
 .j-section {
-	max-width: var(--max-width);
+	max-width: var(--j-max);
 	margin-inline: auto;
-	padding: clamp(80px, 12vw, 140px) clamp(16px, 5vw, 48px);
+	padding: clamp(80px, 12vw, 140px) var(--rail-w) clamp(80px, 12vw, 140px) var(--j-gutter);
 	scroll-margin-top: 0;
 }
 
@@ -1102,7 +1124,9 @@ html:not(.js) .w-web { background: #eef2f6; }
 .j-notes {
 	position: relative;
 	z-index: 1;
-	padding: clamp(24px, 6vw, 72px) clamp(16px, 5vw, 48px) clamp(80px, 10vw, 140px);
+	max-width: var(--j-max);
+	margin-inline: auto;
+	padding: clamp(24px, 6vw, 72px) var(--rail-w) clamp(80px, 10vw, 140px) var(--j-gutter);
 	color: var(--color-text);
 }
 
@@ -1172,8 +1196,6 @@ html:not(.js) .w-web { background: #eef2f6; }
 	display: flex;
 	flex-direction: column;
 	gap: clamp(40px, 5vw, 64px);
-	max-width: var(--max-width);
-	margin-inline: auto;
 	padding: clamp(20px, 4vw, 48px);
 	border: 1px solid var(--color-border);
 	border-radius: 24px;
@@ -1226,7 +1248,19 @@ html:not(.js) .w-web { background: #eef2f6; }
 	z-index: 5;
 	transform: translateY(-50%);
 	color: var(--j-fg, var(--color-text));
-	transition: color 0.4s ease;
+	transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+/* dimmed while the ROV dive, with its own depth gauge, fills the screen */
+@media (min-width: 901px) {
+	.j-rail.dim {
+		opacity: 0.25;
+	}
+
+	.j-rail.dim:hover,
+	.j-rail.dim:focus-within {
+		opacity: 1;
+	}
 }
 
 .j-rail ul {
@@ -1236,6 +1270,8 @@ html:not(.js) .w-web { background: #eef2f6; }
 	gap: 2px;
 	list-style: none;
 	padding: 0;
+	/* offsetParent for journey.ts's strip scrolling */
+	position: relative;
 }
 
 .j-rail a {
@@ -1243,7 +1279,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 	align-items: center;
 	justify-content: flex-end;
 	gap: 12px;
-	min-height: 40px;
+	min-height: 44px;
 	min-width: 44px;
 	padding: 0 4px;
 	font: 11px var(--font-mono);
@@ -1282,8 +1318,66 @@ html:not(.js) .w-web { background: #eef2f6; }
 		--rail-w: 16px;
 	}
 
+	/* the rail becomes a chapter strip along the bottom of the screen */
 	.j-rail {
+		top: auto;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		transform: none;
+		padding-bottom: env(safe-area-inset-bottom);
+		background: color-mix(in srgb, var(--j-bg, var(--color-bg)) 88%, transparent);
+		backdrop-filter: blur(10px);
+		border-top: 1px solid color-mix(in srgb, var(--j-fg, var(--color-text)) 16%, transparent);
+		transition: color 0.4s ease, background-color 0.4s ease;
+	}
+
+	.j-rail ul {
+		flex-direction: row;
+		align-items: stretch;
+		gap: 0;
+		padding-inline: 8px;
+		overflow-x: auto;
+		scroll-snap-type: x proximity;
+		scrollbar-width: none;
+	}
+
+	.j-rail ul::-webkit-scrollbar {
 		display: none;
+	}
+
+	.j-rail li {
+		flex: none;
+		scroll-snap-align: center;
+	}
+
+	.j-rail a {
+		flex-direction: column;
+		justify-content: center;
+		gap: 6px;
+		min-height: 52px;
+		padding: 0 14px;
+		font-size: 12px;
+		white-space: nowrap;
+	}
+
+	.j-rail .lbl {
+		opacity: 0.7;
+	}
+
+	.j-rail .bar {
+		width: 16px;
+		opacity: 0;
+	}
+
+	.j-rail a[aria-current] .bar {
+		width: 24px;
+		background: var(--j-acc, var(--color-accent));
+	}
+
+	/* the strip must not cover the end of the page */
+	body:has(.j-rail) {
+		padding-bottom: calc(53px + env(safe-area-inset-bottom));
 	}
 
 	.j-scene {
@@ -1301,7 +1395,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 		min-height: 100svh;
 		grid-template-columns: minmax(0, 1fr);
 		align-content: center;
-		padding: var(--stage-pad-top) 16px 64px;
+		padding: var(--stage-pad-top) var(--j-gutter) 64px;
 	}
 
 	.rig {

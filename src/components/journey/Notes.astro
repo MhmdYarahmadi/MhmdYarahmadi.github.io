@@ -15,9 +15,11 @@ interface Props {
 	projects: CollectionEntry<"projects">[];
 	// heading for a world with a single write-up
 	title?: string;
+	// the scene above already says what the write-up's first paragraph does
+	repeatsLede?: boolean;
 }
 
-const { scene, world, chapter, label, projects, title } = Astro.props;
+const { scene, world, chapter, label, projects, title, repeatsLede = false } = Astro.props;
 ---
 
 <section
@@ -28,7 +30,7 @@ const { scene, world, chapter, label, projects, title } = Astro.props;
 	aria-label={label}
 >
 	<div class="j-notes__inner">
-		{projects.map((p) => <ProjectDetail project={p} title={projects.length === 1 ? title : undefined} />)}
+		{projects.map((p) => <ProjectDetail project={p} title={projects.length === 1 ? title : undefined} repeatsLede={repeatsLede} />)}
 		<slot />
 	</div>
 </section>
