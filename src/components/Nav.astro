@@ -1,7 +1,7 @@
 ---
 import { url } from "../lib/url";
 interface Props {
-	/** The homepage journey: adds the chapter pill and the progress bar, and
+	/** The homepage journey: adds the progress bar, and
 	    lets the header take its colours from the active world. */
 	journey?: boolean;
 }
@@ -20,13 +20,6 @@ const links = [
 	{journey && <div class="nav__progress" id="j-progress" aria-hidden="true"></div>}
 	<div class="nav__inner">
 		<a href={url("/#top")} class="nav__brand">mohammad yarahmadi<span>_</span></a>
-		{
-			journey && (
-				<p class="nav__chapter" id="j-chapter" aria-live="polite">
-					00 · Intro
-				</p>
-			)
-		}
 		<nav aria-label="Primary">
 			<ul class="nav__links">
 				{
@@ -101,15 +94,6 @@ const links = [
 		color: var(--nav-acc);
 	}
 
-	.nav__chapter {
-		padding: 0.45rem 1rem;
-		border: 1px solid color-mix(in srgb, var(--nav-fg) 30%, transparent);
-		border-radius: 999px;
-		font: 0.75rem var(--font-mono);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		white-space: nowrap;
-	}
 
 	.nav__links {
 		display: flex;

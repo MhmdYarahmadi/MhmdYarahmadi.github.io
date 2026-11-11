@@ -1,8 +1,8 @@
 /**
  * Homepage scroll journey. For each world it works out a 0–1 progress from
  * scroll and writes it as --p (CSS does the bars, gauge and XP), toggles .on
- * on the active world and its background layer, updates the nav (chapter
- * pill, colours, progress bar) and the chapter rail, and drives the few
+ * on the active world and its background layer, updates the nav (colours,
+ * progress bar) and the chapter rail, and drives the few
  * text bits CSS can't: quest checklist, drill bit, panel
  * LEDs, terminal lines and the web pipeline cards.
  *
@@ -20,7 +20,6 @@ const worlds = chapters.filter((el) => el.classList.contains("j-scene"));
 const layers = new Map(
 	[...document.querySelectorAll<HTMLElement>("[data-layer]")].map((el) => [el.dataset.layer!, el]),
 );
-const pill = document.getElementById("j-chapter");
 const railLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-rail]")];
 
 // Header colours per world: [text, accent, nav background on desktop, world
@@ -142,7 +141,6 @@ function update() {
 		root.style.setProperty("--j-bg", bg);
 		// the backdrop's particles fade on the light world (journey.css)
 		root.dataset.jworld = world;
-		if (pill) pill.textContent = next.dataset.chapter ?? "";
 		const id = next.id;
 		// Skills has no rail entry; it belongs with About. A world's notes
 		// (#<world>-notes) belong with the world.

@@ -330,6 +330,13 @@ html:not(.js) .w-web { background: #eef2f6; }
 	z-index: 1;
 }
 
+/* keep the dive's depth gauge clear of the chapter rail */
+@media (min-width: 901px) {
+	.journey .d-dive__layout {
+		padding-right: var(--rail-w);
+	}
+}
+
 /* ---- 02 Gamified School ---- */
 .w-school {
 	color: #ede7ff;
