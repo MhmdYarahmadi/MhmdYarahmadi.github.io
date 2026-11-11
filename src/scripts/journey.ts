@@ -121,7 +121,9 @@ const DETAILS: Record<string, (p: number) => void> = {
 		});
 	},
 	iot(p) {
-		const shown = Math.max(1, Math.ceil(p * termLines.length));
+		// the first command and its output are always there, so the
+		// terminal never looks empty
+		const shown = Math.max(2, Math.ceil(p * termLines.length));
 		termLines.forEach((el, i) => (el.hidden = i >= shown));
 	},
 };

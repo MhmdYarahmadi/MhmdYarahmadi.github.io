@@ -5,14 +5,26 @@
    state on its own background. */
 @import "@fontsource/press-start-2p";
 
+/* the shared width and left edge; on body so the site footer (outside
+   .journey) can line up too */
+body:has(.journey) {
+	--j-gutter: clamp(16px, 5vw, 72px);
+	--j-max: 84rem;
+}
+
+/* the site footer on the journey's left edge */
+body:has(.journey) .footer__inner {
+	max-width: var(--j-max);
+	padding-inline: var(--j-gutter);
+}
+
 .journey {
 	--stage-pad-top: 96px;
 	/* room kept clear for the chapter rail and its labels */
 	--rail-w: 160px;
-	/* one left edge and width for every section: worlds, notes, the dive
-	   (rov.css uses the same values), skills, about and contact */
-	--j-gutter: clamp(16px, 5vw, 72px);
-	--j-max: 84rem;
+	/* --j-gutter and --j-max (above) give every section one left edge and
+	   width: worlds, notes, the dive (rov.css uses the same values), skills,
+	   about and contact */
 	position: relative;
 }
 
@@ -946,16 +958,9 @@ html:not(.js) .w-web { background: #eef2f6; }
 	background: var(--color-bg);
 }
 
-/* a soft fade from the last world into the plain sections, not a hard edge */
-.j-plain::before {
-	content: "";
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 100%;
-	height: 120px;
-	background: linear-gradient(transparent, var(--color-bg));
-	pointer-events: none;
+/* a clean edge after the light web world: any fade into the dark goes grey */
+.j-plain {
+	border-top: 1px solid var(--color-border);
 }
 
 /* skills and about (home.css) on the journey's left edge */
