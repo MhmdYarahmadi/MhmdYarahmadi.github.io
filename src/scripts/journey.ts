@@ -54,10 +54,10 @@ function progress(el: HTMLElement): number {
 	// Sticky world: 0 when it pins, 1 when it unpins.
 	if (!stacked.matches) return clamp(-r.top / Math.max(1, r.height - vh));
 	// Stacked world (phones): the visual sits below the text, so it is its
-	// own scroll that counts: 0 as its top enters the bottom of the screen,
-	// 1 once its top reaches 40% from the top.
+	// own scroll that counts: 0 until its top is 70% down the screen (so it
+	// is well in view), 1 once its top reaches 25% from the top.
 	const v = (visuals.get(el) ?? el).getBoundingClientRect();
-	return clamp((vh * 0.9 - v.top) / (vh * 0.5));
+	return clamp((vh * 0.7 - v.top) / (vh * 0.45));
 }
 
 // each world's animated visual: the stage's first block after the text
