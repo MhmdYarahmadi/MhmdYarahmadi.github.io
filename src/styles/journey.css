@@ -1094,7 +1094,9 @@ html:not(.js) .w-web { background: #eef2f6; }
 .contact {
 	background:
 		radial-gradient(circle at 30% 40%, var(--color-accent-soft), transparent 45%);
+	/* full width for the glow, content on the journey's shared left edge */
 	max-width: none;
+	padding-left: max(var(--j-gutter), calc((100% - var(--j-max)) / 2 + var(--j-gutter)));
 }
 
 .contact > div {
@@ -1102,8 +1104,6 @@ html:not(.js) .w-web { background: #eef2f6; }
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 26px;
-	max-width: var(--max-width);
-	margin-inline: auto;
 }
 
 .contact h2 {
