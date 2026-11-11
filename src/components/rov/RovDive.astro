@@ -74,7 +74,7 @@ const { brief = false, ...attrs } = Astro.props;
 					<figcaption class="d-muted">The ROV's own camera: fish around the legs of an offshore platform.</figcaption>
 				</figure>
 				<svg class="d-diagram" viewBox="0 0 340 500" role="img" aria-labelledby="d-diag-t">
-					<title id="d-diag-t">Control chain: controller, Bluetooth, laptop, Wi-Fi with UDP, modem buoy, tether, network switch, Raspberry Pi, USB serial, ESP32, PWM, six thrusters. The IP camera connects to the switch and its video travels back up to the laptop. A leak sensor of our own design feeds the Raspberry Pi.</title>
+					<title id="d-diag-t">Control chain: controller, Bluetooth, laptop, Wi-Fi with UDP, modem buoy, tether, network switch, Raspberry Pi, USB serial, ESP32, PWM, six thrusters. The IP camera connects to the switch and its video travels back up to the laptop. Sensors, including a leak sensor of our own design, feed the Raspberry Pi.</title>
 					<defs>
 						<marker id="d-arr-c" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m-cmd" d="M0 0 L8 4 L0 8 Z"></path></marker>
 						<marker id="d-arr-v" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m-vid" d="M0 0 L8 4 L0 8 Z"></path></marker>
@@ -95,7 +95,7 @@ const { brief = false, ...attrs } = Astro.props;
 					<path class="vid" d="M40 298 V272 H93" marker-end="url(#d-arr-v)"></path>
 					<path class="cmd" d="M185 282 V310" marker-end="url(#d-arr-c)"></path>
 					<rect x="95" y="312" width="150" height="34" rx="8"></rect><text x="170" y="333" text-anchor="middle">Raspberry Pi</text>
-					<rect x="262" y="312" width="78" height="34" rx="8"></rect><text x="301" y="333" text-anchor="middle">Leak sensor</text>
+					<rect x="262" y="312" width="78" height="34" rx="8"></rect><text x="301" y="333" text-anchor="middle">Sensors</text>
 					<path class="vid solid" d="M262 329 H247" marker-end="url(#d-arr-v)"></path>
 					<path class="cmd" d="M185 346 V374" marker-end="url(#d-arr-c)"></path><text class="lbl" x="196" y="364">USB serial</text>
 					<rect x="95" y="376" width="150" height="34" rx="8"></rect><text x="170" y="397" text-anchor="middle">ESP32</text>
