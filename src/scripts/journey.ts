@@ -70,7 +70,6 @@ const pipe = q<SVGLineElement>("[data-pipe]");
 const bit = q<SVGPathElement>("[data-bit]");
 const dim = q<SVGLineElement>("[data-dim]");
 const dimEnd = q<SVGLineElement>("[data-dimend]");
-const dimLabel = q<SVGGElement>("[data-dimlabel]");
 const bitDepth = q("[data-bitdepth]");
 const panels = [...document.querySelectorAll<HTMLElement>("[data-panel]")];
 
@@ -95,7 +94,6 @@ const DETAILS: Record<string, (p: number) => void> = {
 		dim?.setAttribute("y2", String(y));
 		dimEnd?.setAttribute("y1", String(y));
 		dimEnd?.setAttribute("y2", String(y));
-		dimLabel?.setAttribute("transform", `translate(0 ${Math.round((210 + y) / 2)})`);
 		if (bitDepth) bitDepth.textContent = String(Math.round(p * 2400));
 		panels.forEach((el, i) => {
 			const on = p > [0.12, 0.45, 0.78][i];

@@ -1282,7 +1282,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 	min-height: 44px;
 	min-width: 44px;
 	padding: 0 4px;
-	font: 11px var(--font-mono);
+	font: 12px var(--font-mono);
 	letter-spacing: 0.08em;
 }
 
