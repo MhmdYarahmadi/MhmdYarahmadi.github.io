@@ -234,10 +234,82 @@ html:not(.js) .w-web { background: #eef2f6; }
 }
 
 .w-intro .j-stick {
-	grid-template-columns: minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
 	align-content: center;
-	gap: 24px;
+	gap: clamp(24px, 4vw, 64px);
 	padding: clamp(48px, 8vw, 96px) var(--rail-w) clamp(48px, 8vw, 96px) var(--j-gutter);
+}
+
+/* the ROV's camera as a live monitor beside the hero copy */
+.j-cam {
+	display: grid;
+	gap: 12px;
+	margin: 0;
+	min-width: 0;
+}
+
+.j-cam__frame {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	border: 1px solid rgba(0, 229, 255, 0.28);
+	border-radius: 18px;
+	overflow: hidden;
+	background: #06223a;
+	box-shadow: 0 0 80px -10px var(--j-hero-glow), 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+.j-cam video {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* a faint scanline and vignette, so it reads as a camera feed */
+.j-cam__frame::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px),
+		radial-gradient(ellipse at center, transparent 55%, rgba(1, 7, 15, 0.55));
+	pointer-events: none;
+}
+
+.j-cam__tag {
+	position: absolute;
+	left: 12px;
+	top: 12px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: rgba(1, 7, 15, 0.72);
+	color: #e6f7ff;
+	font: 500 11px var(--font-mono);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.j-cam__tag i {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #ff5a4f;
+	animation: j-blink 1.6s steps(1) infinite;
+}
+
+.j-cam figcaption {
+	font: 13px var(--font-mono);
+	color: var(--color-text-muted);
+}
+
+.j-cam figcaption a {
+	color: var(--color-accent);
+	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 .w-intro h1 {
@@ -453,10 +525,11 @@ html:not(.js) .w-web { background: #eef2f6; }
 	color: #fff;
 }
 
-.quest ul {
+.quest ol {
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 2px;
+	margin: 0;
 	list-style: none;
 	padding: 0;
 }
@@ -465,9 +538,114 @@ html:not(.js) .w-web { background: #eef2f6; }
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	min-height: 34px;
 	font-size: 14px;
 	color: #ede7ff;
+}
+
+/* each objective fills its command into the terminal */
+.quest li button {
+	flex: 1;
+	min-height: 36px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	text-decoration: inherit;
+	cursor: pointer;
+}
+
+.quest li button:hover {
+	color: #ffd23f;
+}
+
+.quest li.next button {
+	color: #fff;
+}
+
+.quest :focus-visible {
+	outline: 2px solid #ffd23f;
+	outline-offset: 2px;
+}
+
+/* the simulated terminal */
+.qterm {
+	border: 2px solid #2c2450;
+	background: #0b0816;
+	font: 12.5px/1.55 var(--font-mono);
+}
+
+.qterm__log {
+	height: clamp(96px, 18svh, 168px);
+	padding: 10px 12px 4px;
+	overflow-y: auto;
+	color: #cfc6f0;
+}
+
+.qterm__log div {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.qterm__in { color: #fff; }
+.qterm__ok { color: #7cf29c; }
+.qterm__err { color: #ff7aa8; }
+.qterm__dim { color: #8f86b8; }
+
+.qterm__line {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 12px 8px;
+}
+
+.qterm__line label {
+	flex: none;
+	color: #7cf29c;
+}
+
+.qterm__line input {
+	flex: 1;
+	min-width: 0;
+	min-height: 36px;
+	padding: 0 6px;
+	border: 1px solid #2c2450;
+	background: #120d24;
+	color: #fff;
+	font: inherit;
+	/* 16px, or iOS zooms the page in on focus */
+	font-size: 16px;
+	caret-color: #ffd23f;
+}
+
+.qterm__line input::placeholder {
+	color: #8f86b8;
+}
+
+.quest__actions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.quest__btn {
+	min-height: 44px;
+	padding: 0 16px;
+	border: 2px solid #ffd23f;
+	background: #120d24;
+	color: #ffd23f;
+	box-shadow: 4px 4px 0 #ff4d8d;
+	font: 10px "Press Start 2P", var(--font-mono);
+	cursor: pointer;
+}
+
+.quest__btn:hover {
+	background: #1b1535;
+}
+
+.quest__btn:active {
+	translate: 2px 2px;
+	box-shadow: 2px 2px 0 #ff4d8d;
 }
 
 .quest li::before {
@@ -506,6 +684,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 	height: 100%;
 	width: calc(var(--p) * 100%);
 	background: #ffd23f;
+	transition: width 0.4s steps(4);
 }
 
 .levelup {
@@ -1433,6 +1612,11 @@ html:not(.js) .w-web { background: #eef2f6; }
 		height: auto;
 	}
 
+	.w-intro .j-stick {
+		grid-template-columns: minmax(0, 1fr);
+		padding-bottom: calc(96px + env(safe-area-inset-bottom));
+	}
+
 	.j-stick,
 	.w-web .j-stick {
 		position: relative;
@@ -1502,12 +1686,14 @@ html:not(.js) .w-web { background: #eef2f6; }
 	.led,
 	.j-rail .bar,
 	.j-rail .lbl,
-	.deal__bar i {
+	.deal__bar i,
+	.xp__bar i {
 		transition: none;
 	}
 
 	.blink,
 	.levelup,
+	.j-cam__tag i,
 	.j-scroll i::before {
 		animation: none;
 	}

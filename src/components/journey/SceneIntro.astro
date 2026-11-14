@@ -1,6 +1,9 @@
 ---
+import { url } from "../../lib/url";
 // The journey's first screen: the hero, in the site's base colours
-// (journey.css, 00 intro).
+// (journey.css, 00 intro). Beside the copy, the ROV's own camera as a live
+// feed: a plain <video> (no three.js on the first screen) that loads only
+// after the page has, and stays on its poster with reduced motion.
 ---
 
 <section class="j-scene w-intro" id="top" data-world="intro" data-chapter="00 · Intro" aria-labelledby="j-hero-title">
@@ -14,6 +17,18 @@
 				and ERP systems on top.
 			</p>
 		</div>
+		<figure class="j-cam rv" style="--d:240ms">
+			<div class="j-cam__frame">
+				<video id="j-cam" poster={url("/media/rov-deep.jpg")} muted loop playsinline preload="none" width="640" height="360" aria-label="Footage from the ROV's camera: fish around an underwater structure">
+					<source src={url("/media/rov-deep.webm")} type="video/webm; codecs=av01.0.04M.08" />
+					<source src={url("/media/rov-deep.mp4")} type="video/mp4" />
+				</video>
+				<span class="j-cam__tag" aria-hidden="true"><i></i>ROV · IP camera</span>
+			</div>
+			<figcaption>
+				Real footage from the ROV's camera. <a href="#rov">See the dive</a>
+			</figcaption>
+		</figure>
 		{/* fades out as the visitor starts scrolling (journey.css) */}
 		<a class="j-scroll" href="#rov" aria-label="Scroll to the projects">
 			<span>Scroll</span>
@@ -21,3 +36,20 @@
 		</a>
 	</div>
 </section>
+
+<script>
+	// Plays only after the page has loaded (so the clip never competes with the
+	// first paint), only while on screen, and never with reduced motion.
+	const cam = document.getElementById("j-cam") as HTMLVideoElement;
+	const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+	let seen = false;
+	const sync = () => (seen && !reduced.matches ? cam.play().catch(() => {}) : cam.pause());
+	const start = () =>
+		new IntersectionObserver(([e]) => {
+			seen = e.isIntersecting;
+			sync();
+		}).observe(cam);
+	if (document.readyState === "complete") start();
+	else addEventListener("load", start, { once: true });
+	reduced.addEventListener("change", sync);
+</script>

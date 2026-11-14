@@ -3,7 +3,7 @@
  * scroll and writes it as --p (CSS does the bars, gauge and XP), toggles .on
  * on the active world and its background layer, sets the rail and particle colours, marks
  * the chapter rail, and drives the few
- * text bits CSS can't: quest checklist, drill bit, panel
+ * text bits CSS can't: drill bit, panel
  * LEDs, terminal lines and the web pipeline cards.
  *
  * The markup is server-rendered in its final state, so without JS (or with
@@ -69,11 +69,6 @@ const visuals = new Map(
 const q = <T extends Element = HTMLElement>(sel: string, scope: ParentNode = document) =>
 	scope.querySelector<T>(sel);
 
-const quest = q("[data-quest]");
-const questItems = quest ? [...quest.querySelectorAll("li")] : [];
-const xpEl = q("[data-xp]");
-const lvlEl = q("[data-lvl]");
-
 const pipe = q<SVGLineElement>("[data-pipe]");
 const bit = q<SVGPathElement>("[data-bit]");
 const dim = q<SVGLineElement>("[data-dim]");
@@ -87,14 +82,6 @@ const STAGES = ["Lead", "Scoping", "Build", "Live"];
 const termLines = [...(q("[data-term]")?.children ?? [])].slice(0, -1) as HTMLElement[];
 
 const DETAILS: Record<string, (p: number) => void> = {
-	school(p) {
-		const done = Math.min(questItems.length, Math.floor(p * 4.4));
-		questItems.forEach((li, i) => li.classList.toggle("done", i < done));
-		const up = p > 0.92;
-		quest?.classList.toggle("up", up);
-		if (xpEl) xpEl.textContent = String(Math.round(p * 1000));
-		if (lvlEl) lvlEl.textContent = up ? "4" : "3";
-	},
 	drill(p) {
 		const y = 210 + p * 470;
 		pipe?.setAttribute("y2", String(y));
