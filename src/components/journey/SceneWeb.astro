@@ -1,6 +1,8 @@
 ---
 // A pipeline, not numbers: the work moves from first contact to live as
 // the world scrolls by (journey.ts sets each row's --s stage, 0–3).
+import LatencyDemo from "../islands/LatencyDemo";
+// The dashboard's top half is the before/after speed demo (LatencyDemo.tsx).
 const stages = ["Lead", "Scoping", "Build", "Live"];
 const deals = [
 	["Company website", "Dealfdi"],
@@ -27,17 +29,9 @@ const deals = [
 				<li>Company sites</li>
 			</ul>
 		</div>
-		<div class="dash rv" style="--d:160ms" aria-hidden="true">
-			<div class="dash__head">
-				<span>Overview</span>
-				<div class="dash__tabs"><span>Sites</span><span>ERP</span><span>CRM</span></div>
-			</div>
-			<div class="tiles">
-				<div><p>Dashboard latency</p><strong>150 ms</strong><small>was 2 s</small></div>
-				<div><p>Platform</p><strong>Odoo</strong></div>
-				<div><p>Modules</p><strong>ERP · CRM</strong></div>
-			</div>
-			<div class="pipe">
+		<div class="dash rv" style="--d:160ms">
+			<LatencyDemo client:visible />
+			<div class="pipe" aria-hidden="true">
 				<div class="pipe__cols">{stages.map((st) => <span>{st}</span>)}</div>
 				<ul class="pipe__rows">
 					{

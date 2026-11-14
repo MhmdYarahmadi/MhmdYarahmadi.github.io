@@ -1032,49 +1032,189 @@ html:not(.js) .w-web { background: #eef2f6; }
 	font: 500 12px var(--font-sans);
 }
 
-.dash__tabs span {
-	padding: 6px 12px;
+.dash__tabs button {
+	min-height: 32px;
+	padding: 0 12px;
 	border-radius: 999px;
 	border: 1px solid #dce3eb;
+	background: #fff;
+	color: #0f172a;
+	font: inherit;
+	cursor: pointer;
+	transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.dash__tabs span:first-child {
+.dash__tabs button:hover {
+	border-color: #0e7490;
+}
+
+.dash__tabs button[aria-pressed="true"] {
 	background: #0e7490;
 	border-color: #0e7490;
 	color: #fff;
 }
 
-.tiles {
+/* before/after speed demo (LatencyDemo.tsx) */
+.lat {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.lat__panes {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 12px;
 }
 
-.tiles div {
-	padding: 16px;
+.lat__pane {
+	display: grid;
+	gap: 10px;
+	padding: 14px;
+	border: 1px solid #dce3eb;
 	border-radius: 12px;
 	background: #f4f7fa;
 }
 
-.tiles p {
+.lat__pane header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 8px;
+}
+
+.lat__name {
+	font: 600 11px var(--font-mono);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #64748b;
+}
+
+.lat__pane + .lat__pane .lat__name {
+	color: #0e7490;
+}
+
+.lat__ms {
+	white-space: nowrap;
+	font: 600 20px var(--font-mono);
+	font-variant-numeric: tabular-nums;
+	color: #0f172a;
+}
+
+.lat__pane.is-loading .lat__ms {
+	color: #b45309;
+}
+
+.lat__body,
+.lat__skel {
+	position: relative;
+	display: grid;
+	gap: 4px;
+	min-height: 112px;
+}
+
+.lat__body p {
 	margin: 0;
 	font-size: 12px;
 	color: #475569;
 }
 
-.tiles strong {
-	display: block;
-	margin-top: 4px;
+.lat__body strong {
 	font: 600 22px var(--font-display);
-	overflow-wrap: anywhere;
 }
 
-.tiles small {
+.lat__bars,
+.lat__skel div {
+	display: flex;
+	align-items: flex-end;
+	gap: 6px;
+	height: 48px;
+	margin-top: 6px;
+}
+
+.lat__bars span {
+	flex: 1;
+	border-radius: 3px 3px 0 0;
+	background: #0e7490;
+	opacity: 0.85;
+}
+
+/* skeleton while loading */
+.lat__skel b {
 	display: block;
-	margin-top: 2px;
-	font: 500 12px var(--font-mono);
-	color: #475569;
-	text-decoration: line-through;
+	height: 12px;
+	width: 60%;
+	border-radius: 4px;
+	background: #e2e8f0;
+}
+
+.lat__skel b + b {
+	height: 20px;
+	width: 40%;
+}
+
+.lat__skel div span {
+	flex: 1;
+	height: 100%;
+	border-radius: 3px 3px 0 0;
+	background: #e2e8f0;
+}
+
+.lat__skel b,
+.lat__skel div span {
+	animation: j-shimmer 1s ease-in-out infinite alternate;
+}
+
+@keyframes j-shimmer {
+	to { opacity: 0.45; }
+}
+
+.lat__spin {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 18px;
+	height: 18px;
+	border: 2px solid #cbd5e1;
+	border-top-color: #0e7490;
+	border-radius: 50%;
+	animation: j-spin 0.8s linear infinite;
+}
+
+@keyframes j-spin {
+	to { transform: rotate(1turn); }
+}
+
+.lat__foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+}
+
+.lat__foot p {
+	margin: 0;
+	font-size: 13px;
+	color: #0f172a;
+}
+
+.lat__foot p span {
+	color: #64748b;
+}
+
+.lat__reload {
+	flex: none;
+	min-height: 44px;
+	padding: 0 16px;
+	border: 1.5px solid #0e7490;
+	border-radius: 999px;
+	background: #0e7490;
+	color: #fff;
+	font: 600 13px var(--font-sans);
+	cursor: pointer;
+}
+
+.lat__reload:hover {
+	background: #155e75;
 }
 
 .pipe__cols {
@@ -1653,12 +1793,19 @@ html:not(.js) .w-web { background: #eef2f6; }
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.tiles {
-		grid-template-columns: minmax(0, 1fr);
-	}
-
 	.deal span {
 		display: none;
+	}
+}
+
+@media (max-width: 480px) {
+	.lat__pane header {
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.lat__ms {
+		font-size: 17px;
 	}
 }
 
@@ -1687,12 +1834,16 @@ html:not(.js) .w-web { background: #eef2f6; }
 	.j-rail .bar,
 	.j-rail .lbl,
 	.deal__bar i,
+	.dash__tabs button,
 	.xp__bar i {
 		transition: none;
 	}
 
 	.blink,
 	.levelup,
+	.lat__skel b,
+	.lat__skel div span,
+	.lat__spin,
 	.j-cam__tag i,
 	.j-scroll i::before {
 		animation: none;
