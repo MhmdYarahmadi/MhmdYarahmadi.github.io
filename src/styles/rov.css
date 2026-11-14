@@ -196,8 +196,15 @@
 	flex-direction: column;
 	justify-content: center;
 	gap: 22px;
-	min-height: 100svh;
+	min-height: 80svh;
 	padding: 80px 0;
+}
+
+/* the opening title needs less than a screen of its own */
+@media (min-width: 901px) {
+	.d-sec:first-child {
+		min-height: 55svh;
+	}
 }
 
 .d-sec h2 {
@@ -568,7 +575,7 @@
 		position: sticky;
 		top: 72px;
 		z-index: 1;
-		height: 40svh;
+		height: 46svh;
 		margin-inline: calc(-1 * clamp(16px, 5vw, 72px));
 		/* solid, so the story disappears cleanly behind it; the short fade
 		   sits below the band, under nothing the band shows */
@@ -652,15 +659,9 @@
 	opacity: 0;
 }
 
-/* The 3D model is the picture now; the still image is only a fallback for
-   when the 3D can't run (reduced motion, no WebGL). */
-.d-stage__poster {
-	display: none;
-}
-
-.d-stage.fallback .d-stage__poster {
-	display: block;
-}
+/* The still image holds the stage until the 3D is live (it cross-fades out,
+   above), and stays when the 3D can't run (reduced motion, no WebGL), so
+   the stage is never empty water, which matters most on slower phones. */
 
 /* Phones have no sticky nav (Nav.astro), so the stage sticks to the very top. */
 @media (max-width: 760px) {
