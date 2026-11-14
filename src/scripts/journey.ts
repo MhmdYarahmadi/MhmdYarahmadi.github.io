@@ -83,6 +83,8 @@ const termLines = [...(q("[data-term]")?.children ?? [])].slice(0, -1) as HTMLEl
 
 const DETAILS: Record<string, (p: number) => void> = {
 	drill(p) {
+		// the visitor has taken the controls (drill.ts)
+		if (panels[0]?.closest<HTMLElement>("[data-manual]")) return;
 		const y = 210 + p * 470;
 		pipe?.setAttribute("y2", String(y));
 		bit?.setAttribute("transform", `translate(0 ${y})`);

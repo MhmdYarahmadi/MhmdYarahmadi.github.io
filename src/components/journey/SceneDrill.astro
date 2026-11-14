@@ -1,5 +1,8 @@
 ---
 const panels = ["A", "B", "C"];
+// The rig follows scroll until the visitor touches the demo console, then
+// src/scripts/drill.ts drives it: weight on bit × rotary speed, slowed by
+// harder strata, with the mud pump keeping the bit cool.
 ---
 
 <section class="j-scene w-drill" id="drilling" data-world="drill" data-chapter="03 · Drilling sim · Blueprint" aria-label="Drilling Simulation project">
@@ -24,7 +27,7 @@ const panels = ["A", "B", "C"];
 			</ul>
 		</div>
 		<div class="rig rv" style="--d:180ms">
-			<svg viewBox="0 0 520 720" role="img" aria-label="Blueprint of a drilling rig with the drill bit descending">
+			<svg viewBox="0 0 520 720" role="img" data-rig aria-label="Blueprint of a drilling rig with the drill bit descending">
 				<defs>
 					<pattern id="rig-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
 						<path d="M0 0V10" stroke="#CFE3FF" stroke-width="1"></path>
@@ -63,13 +66,46 @@ const panels = ["A", "B", "C"];
 				<text x="316" y="100" fill="#CFE3FF" font-family="JetBrains Mono Variable, monospace" font-size="11">A</text>
 				<path d="M332 96H372" stroke="#CFE3FF" stroke-width="1"></path>
 				<text x="378" y="100" fill="#CFE3FF" font-family="JetBrains Mono Variable, monospace" font-size="11">DERRICK</text>
-				<text x="30" y="324" fill="#CFE3FF" opacity="0.85" font-family="JetBrains Mono Variable, monospace" font-size="13">STRATUM 1</text>
-				<text x="30" y="464" fill="#CFE3FF" opacity="0.85" font-family="JetBrains Mono Variable, monospace" font-size="13">STRATUM 2</text>
-				<text x="30" y="604" fill="#CFE3FF" opacity="0.85" font-family="JetBrains Mono Variable, monospace" font-size="13">STRATUM 3</text>
+				<text x="30" y="324" fill="#CFE3FF" opacity="0.85" font-family="JetBrains Mono Variable, monospace" font-size="13">STRATUM 1 · SOFT</text>
+				<text x="30" y="464" fill="#CFE3FF" opacity="0.85" font-family="JetBrains Mono Variable, monospace" font-size="13">STRATUM 2 · FIRM</text>
+				<text x="30" y="604" fill="#CFE3FF" opacity="0.85" font-family="JetBrains Mono Variable, monospace" font-size="13">STRATUM 3 · HARD</text>
 			</svg>
+		</div>
+		<div class="console rv" style="--d:260ms" data-console role="group" aria-labelledby="console-t">
+			<p class="console__head"><span id="console-t">Try the controls</span><span>Simulation · demo only</span></p>
+			<label class="console__row">
+				<span>Weight on bit</span>
+				<input type="range" min="0" max="30" step="1" value="10" data-wob />
+				<output data-wob-out>10 t</output>
+			</label>
+			<label class="console__row">
+				<span>Rotary speed</span>
+				<input type="range" min="0" max="180" step="5" value="60" data-rpm />
+				<output data-rpm-out>60 rpm</output>
+			</label>
+			<div class="console__btns">
+				<button type="button" class="console__pump" aria-pressed="true" data-pump>Mud pump <b data-pump-out>ON</b></button>
+				<button type="button" class="console__reset" data-reset>Reset</button>
+			</div>
+			<dl class="console__read">
+				<div><dt>ROP</dt><dd data-rop>0 m/h</dd></div>
+				<div><dt>Bit temp</dt><dd data-temp>45 °C</dd></div>
+				<div><dt>Stratum</dt><dd data-stratum>1 · soft</dd></div>
+			</dl>
+			<ol class="sigpath" aria-label="Signal path" data-sig>
+				<li>Panel</li>
+				<li>ESP32</li>
+				<li>Jetson Nano</li>
+				<li>Simulation</li>
+			</ol>
+			<p class="console__msg" role="status" data-msg>Move a control to take over from the scroll.</p>
 		</div>
 		<div class="titleblock rv" style="--d:300ms" aria-hidden="true">
 			<span>DWG 03</span><span>DRILLING SIM</span><span>SCALE NTS</span><span>REV A</span>
 		</div>
 	</div>
 </section>
+
+<script>
+	import "../../scripts/drill.ts";
+</script>

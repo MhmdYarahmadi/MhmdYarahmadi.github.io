@@ -778,6 +778,234 @@ html:not(.js) .w-web { background: #eef2f6; }
 	box-shadow: 0 0 12px #ff8a3d;
 }
 
+/* desktop: the console sits under the copy, the rig spans both rows; on
+   phones (one column) it follows the rig, so the bit stays in view */
+@media (min-width: 901px) {
+	.w-drill .j-stick {
+		grid-template-rows: auto auto;
+		align-content: center;
+		row-gap: 20px;
+	}
+
+	.w-drill .j-copy {
+		align-self: end;
+	}
+
+	.w-drill .rig {
+		grid-column: 2;
+		grid-row: 1 / span 2;
+	}
+
+	.w-drill .console {
+		grid-column: 1;
+		grid-row: 2;
+		align-self: start;
+	}
+}
+
+/* the demo console (drill.ts) */
+.console {
+	display: grid;
+	gap: 10px;
+	max-width: 30rem;
+	padding: 14px 16px;
+	border: 1px solid rgba(207, 227, 255, 0.5);
+	background: rgba(11, 42, 74, 0.6);
+	font: 12px var(--font-mono);
+	color: #dcebff;
+}
+
+.console__head {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 0;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.console__head span:first-child {
+	color: #ff8a3d;
+	font-weight: 600;
+}
+
+.console__head span + span {
+	color: #a9c4e6;
+}
+
+.console__row {
+	display: grid;
+	grid-template-columns: 7.5rem minmax(0, 1fr) 4.5rem;
+	align-items: center;
+	gap: 10px;
+}
+
+.console__row input {
+	width: 100%;
+	min-height: 32px;
+	margin: 0;
+	accent-color: #ff8a3d;
+	cursor: pointer;
+}
+
+.console__row output {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	color: #fff;
+}
+
+.console__btns {
+	display: flex;
+	gap: 10px;
+}
+
+.console button {
+	min-height: 40px;
+	padding: 0 14px;
+	border: 1px solid rgba(207, 227, 255, 0.6);
+	background: transparent;
+	color: #dcebff;
+	font: 600 12px var(--font-mono);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.console button:hover {
+	border-color: #ff8a3d;
+}
+
+.console__pump[aria-pressed="true"] b {
+	color: #ff8a3d;
+}
+
+.console__pump[aria-pressed="false"] b {
+	color: #ff5a4f;
+}
+
+.console__reset {
+	margin-left: auto;
+}
+
+.console__read {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin: 0;
+	border: 1px solid rgba(207, 227, 255, 0.3);
+}
+
+.console__read div {
+	padding: 6px 10px;
+}
+
+.console__read div + div {
+	border-left: 1px solid rgba(207, 227, 255, 0.3);
+}
+
+.console__read dt {
+	font-size: 10px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #a9c4e6;
+}
+
+.console__read dd {
+	margin: 2px 0 0;
+	font-size: 14px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	color: #fff;
+	white-space: nowrap;
+}
+
+/* panel → ESP32 → Jetson Nano → simulation; .tx lights it node by node */
+.sigpath {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 11px;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.sigpath li {
+	padding: 4px 8px;
+	border: 1px dashed rgba(207, 227, 255, 0.45);
+	color: #a9c4e6;
+}
+
+.sigpath li + li {
+	position: relative;
+	margin-left: 18px;
+}
+
+.sigpath li + li::before {
+	content: "→";
+	position: absolute;
+	left: -17px;
+	color: #a9c4e6;
+}
+
+.sigpath.tx li {
+	animation: j-tx 0.7s ease-out both;
+}
+
+.sigpath.tx li:nth-child(2) { animation-delay: 0.12s; }
+.sigpath.tx li:nth-child(3) { animation-delay: 0.24s; }
+.sigpath.tx li:nth-child(4) { animation-delay: 0.36s; }
+
+@keyframes j-tx {
+	30% {
+		border-color: #ff8a3d;
+		border-style: solid;
+		color: #fff;
+		box-shadow: 0 0 12px rgba(255, 138, 61, 0.45);
+	}
+}
+
+.console__msg {
+	min-height: 2.6em;
+	margin: 0;
+	color: #a9c4e6;
+}
+
+.w-drill[data-alarm="warn"] .console__msg {
+	color: #ffb547;
+}
+
+.w-drill[data-alarm="alarm"] .console__msg {
+	color: #ff6b5f;
+	font-weight: 600;
+}
+
+.w-drill[data-alarm="warn"] .console,
+.w-drill[data-alarm="alarm"] .console {
+	border-color: #ff6b5f;
+}
+
+.w-drill[data-alarm] [data-bit] {
+	transition: fill 0.3s ease;
+}
+
+.w-drill[data-alarm="warn"] [data-bit],
+.w-drill[data-alarm="alarm"] [data-bit] {
+	fill: #ff3b30;
+}
+
+/* mud flowing down the string while drilling with the pump on */
+.rig svg.flowing [data-pipe] {
+	animation: j-flow 0.5s linear infinite;
+}
+
+@keyframes j-flow {
+	to { stroke-dashoffset: -11; }
+}
+
 .w-drill .btn {
 	border-radius: 0;
 	border-color: rgba(207, 227, 255, 0.6);
@@ -1841,6 +2069,8 @@ html:not(.js) .w-web { background: #eef2f6; }
 
 	.blink,
 	.levelup,
+	.sigpath.tx li,
+	.rig svg.flowing [data-pipe],
 	.lat__skel b,
 	.lat__skel div span,
 	.lat__spin,
