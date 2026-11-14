@@ -16,6 +16,21 @@ const {
 	description = "Portfolio of hardware, embedded, and software projects.",
 	bodyClass,
 } = Astro.props;
+
+// Absolute URLs for link previews, from `site` in astro.config.mjs.
+const site = Astro.site ?? new URL("https://mhmdyarahmadi.github.io");
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(url("/og.jpg"), site).href;
+const ogAlt = "Mohammad Yarahmadi, Embedded software · IoT · Web, beside his ROV over its own underwater camera footage";
+const person = {
+	"@context": "https://schema.org",
+	"@type": "Person",
+	name: "Mohammad Yarahmadi",
+	jobTitle: "Embedded software engineer",
+	url: new URL(url("/"), site).href,
+	email: "mailto:mohyar1380@gmail.com",
+	sameAs: ["https://github.com/MhmdYarahmadi"],
+};
 ---
 
 <html lang="en">
@@ -26,6 +41,23 @@ const {
 		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<link rel="canonical" href={canonical} />
+		<meta name="theme-color" content="#05070a" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Mohammad Yarahmadi" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={ogAlt} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content={ogAlt} />
+		<script type="application/ld+json" set:html={JSON.stringify(person)} />
 		{/* Scroll-reveal hides content until observed, so it must only apply
 		    when JS is actually running — otherwise a failed script leaves the
 		    whole page blank. Inline and in <head> so it lands before paint. */}
