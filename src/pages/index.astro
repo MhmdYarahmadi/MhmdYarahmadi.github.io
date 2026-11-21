@@ -13,7 +13,6 @@ import AboutMe from "../components/home/AboutMe.astro";
 import Contact from "../components/Contact.astro";
 import Notes from "../components/journey/Notes.astro";
 import RovDive from "../components/rov/RovDive.astro";
-import SalesPipeline from "../components/islands/SalesPipeline";
 import { getEntry } from "astro:content";
 import "../styles/journey.css";
 import "../styles/home.css";
@@ -23,7 +22,6 @@ const school = await entry("gamified-school");
 const drill = await entry("drilling-simulation");
 const web = await entry("web-enterprise");
 const iot = await Promise.all(["backup-power-camera", "sous-vide", "ac-remote"].map(entry));
-const about = "About the project";
 ---
 
 {/* The homepage, and the site's only page: a scroll journey. Each project is a full-screen world
@@ -37,23 +35,27 @@ const about = "About the project";
 	description="Embedded software, IoT and web: an underwater ROV, a gamified programming school, a drilling simulator, ESP32 builds, and websites and Odoo ERP for businesses."
 >
 	<div class="journey">
+		{/* first Tab stop: jumps past the 9 rail links to the hero */}
+		<a class="skip-link" href="#top">Skip to content</a>
 		<Backdrop />
 		<Rail />
 		<SceneIntro />
 		<SceneRov />
 		<RovDive />
 		<SceneSchool />
-		<Notes scene="school" world="school" chapter="02 · Gamified School · Notes" label="About the Gamified School" projects={[school]} title={about} repeatsLede />
+		<Notes scene="school" world="school" chapter="02 · Gamified School · Notes" label="About the Gamified School" projects={[school]} title="About the Gamified School" repeatsLede />
 		<SceneDrill />
-		<Notes scene="drilling" world="drill" chapter="03 · Drilling sim · Notes" label="About the Drilling Simulation" projects={[drill]} title={about} repeatsLede />
+		<Notes scene="drilling" world="drill" chapter="03 · Drilling sim · Notes" label="About the Drilling Simulation" projects={[drill]} title="About the Drilling Simulation" repeatsLede />
 		<SceneIot />
 		<Notes scene="iot" world="iot" chapter="04 · IoT builds · Notes" label="About the IoT builds" projects={iot} />
 		<SceneWeb />
-		<Notes scene="web" world="web" chapter="05 · Websites & Enterprise · Notes" label="About Websites and Enterprise" projects={[web]} title={about} repeatsLede>
-			<div class="j-notes__demo">
-				<p class="j-notes__eyebrow">Try it · a sales pipeline with made-up deals</p>
-				<SalesPipeline client:visible />
-			</div>
+		<Notes scene="web" world="web" chapter="05 · Websites & Enterprise · Notes" label="About Websites and Enterprise" projects={[web]} title="About Websites and Enterprise" repeatsLede>
+			<p>
+				<a class="btn" href="https://dealfdi.com">
+					See Dealfdi live
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+				</a>
+			</p>
 		</Notes>
 		<div class="j-plain">
 			<Stack journey />

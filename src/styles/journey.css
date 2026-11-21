@@ -112,13 +112,13 @@ body:has(.journey) .footer__inner {
 
 .bg-web {
 	background:
-		radial-gradient(circle at 85% 0%, rgba(99, 102, 241, 0.12), transparent 40%),
-		radial-gradient(circle at 0% 60%, rgba(14, 116, 144, 0.1), transparent 45%),
-		linear-gradient(180deg, #ffffff, #eef2f6 50%, #e6ecf3);
+		radial-gradient(circle at 85% 0%, rgba(99, 102, 241, 0.16), transparent 40%),
+		radial-gradient(circle at 0% 60%, rgba(34, 184, 207, 0.12), transparent 45%),
+		linear-gradient(180deg, #0f1a2b, #0b1220 50%, #090f1b);
 }
 
 .bg-web .bg-rays {
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), transparent);
+	background: linear-gradient(180deg, rgba(148, 197, 255, 0.08), transparent);
 }
 
 /* glowing particles, as on the main site, in the active world's accent */
@@ -136,12 +136,6 @@ body:has(.journey) .footer__inner {
 	transition: background-color 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
 }
 
-/* fainter and flat on the light Websites & Enterprise world */
-:root[data-jworld="web"] .j-particle {
-	opacity: 0.25;
-	box-shadow: none;
-}
-
 @keyframes j-rise {
 	from { translate: 0 30vh; opacity: 0; }
 	15% { opacity: 0.7; }
@@ -156,7 +150,7 @@ html:not(.js) .w-rov { background: linear-gradient(180deg, #0b3550, #01070f); }
 html:not(.js) .w-school { background: #120d24; }
 html:not(.js) .w-drill { background: #0b2a4a; }
 html:not(.js) .w-iot { background: #020604; }
-html:not(.js) .w-web { background: #eef2f6; }
+html:not(.js) .w-web { background: #0b1220; }
 
 /* ---- worlds ---- */
 .j-scene {
@@ -214,15 +208,17 @@ html:not(.js) .w-web { background: #eef2f6; }
 	margin-top: 8px;
 }
 
-/* reveal: only once JS is running, and only on the active world */
-.js .j-scene .rv {
+/* reveal: only once JS is running, the first time a world becomes active, and
+   never on the hero (the first screen must not start blank). Delays (--d) are
+   halved so nothing waits more than ~120 ms. */
+.js .j-scene:not(.w-intro) .rv {
 	opacity: 0;
-	transform: translateY(32px);
-	transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-	transition-delay: var(--d, 0ms);
+	transform: translateY(16px);
+	transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+	transition-delay: calc(var(--d, 0ms) / 2);
 }
 
-.js .j-scene.on .rv {
+.js .j-scene.seen .rv {
 	opacity: 1;
 	transform: none;
 }
@@ -313,7 +309,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 }
 
 .w-intro h1 {
-	font: 300 clamp(48px, 6vw, 96px) / 1 "Sora Variable", var(--font-sans);
+	font: 300 clamp(48px, 6vw, 96px) / 1 var(--font-display);
 	letter-spacing: -0.045em;
 }
 
@@ -422,7 +418,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 	--color-text-muted: #b6ced7;
 	--color-accent: #6ff7d8;
 	--color-border: rgba(111, 247, 216, 0.18);
-	--d-display: "Sora Variable", var(--font-sans);
+	--d-display: var(--font-display);
 	--d-card: rgba(6, 34, 58, 0.6);
 	--d-glow-soft: rgba(111, 247, 216, 0.28);
 	width: 100%;
@@ -1184,9 +1180,9 @@ html:not(.js) .w-web { background: #eef2f6; }
 	background: #a7f3c0;
 }
 
-/* ---- 05 Web & Enterprise (light dashboard) ---- */
+/* ---- 05 Web & Enterprise: a dark office, the dashboard is the lit screen ---- */
 .w-web {
-	color: #0f172a;
+	color: #e2e8f0;
 }
 
 .w-web .j-stick {
@@ -1194,7 +1190,7 @@ html:not(.js) .w-web { background: #eef2f6; }
 }
 
 .w-web .j-tag {
-	color: #0e7490;
+	color: #22b8cf;
 }
 
 .w-web h2 {
@@ -1203,7 +1199,12 @@ html:not(.js) .w-web { background: #eef2f6; }
 }
 
 .w-web .j-lede {
-	color: #475569;
+	color: #a5b4c8;
+}
+
+.w-web .j-lede a {
+	color: #22b8cf;
+	text-underline-offset: 3px;
 }
 
 .w-web .pills {
@@ -1217,22 +1218,13 @@ html:not(.js) .w-web { background: #eef2f6; }
 
 .w-web .pills li {
 	padding: 6px 12px;
-	border: 1px solid #dce3eb;
+	border: 1px solid rgba(148, 163, 184, 0.3);
 	border-radius: 999px;
-	background: #fff;
-}
-
-.w-web .btn {
-	border-color: #cbd5e1;
-	color: #0f172a;
-}
-
-.w-web .btn:hover {
-	border-color: #0e7490;
+	background: rgba(255, 255, 255, 0.04);
 }
 
 .w-web :focus-visible {
-	outline-color: #0e7490;
+	outline-color: #22b8cf;
 }
 
 .dash {
@@ -1240,10 +1232,11 @@ html:not(.js) .w-web { background: #eef2f6; }
 	flex-direction: column;
 	gap: 20px;
 	padding: 24px;
+	color: #0f172a;
 	background: #fff;
 	border: 1px solid #dce3eb;
 	border-radius: 18px;
-	box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 80px -20px rgba(34, 184, 207, 0.35);
 }
 
 .dash__head {
@@ -1767,16 +1760,16 @@ html:not(.js) .w-web { background: #eef2f6; }
 }
 
 .j-notes--web {
-	--color-bg: #eef2f6;
-	--color-bg-elevated: #ffffff;
-	--color-text: #0f172a;
-	--color-text-muted: #475569;
-	--color-accent: #0e7490;
-	--color-accent-soft: rgba(14, 116, 144, 0.1);
-	--color-on-accent: #ffffff;
-	--color-border: #d5dde7;
+	--color-bg: #0b1220;
+	--color-bg-elevated: #131d31;
+	--color-text: #e2e8f0;
+	--color-text-muted: #a5b4c8;
+	--color-accent: #22b8cf;
+	--color-accent-soft: rgba(34, 184, 207, 0.12);
+	--color-on-accent: #04131a;
+	--color-border: rgba(148, 163, 184, 0.22);
 	--d-display: var(--font-sans);
-	--d-card: rgba(255, 255, 255, 0.9);
+	--d-card: rgba(15, 23, 42, 0.9);
 }
 
 .j-notes__inner {
@@ -1803,28 +1796,6 @@ html:not(.js) .w-web { background: #eef2f6; }
 
 .j-notes--school .d-detail__body h3 {
 	font: 13px / 1.6 "Press Start 2P", var(--font-mono);
-}
-
-.j-notes__demo {
-	display: flex;
-	flex-direction: column;
-	gap: 14px;
-	max-width: 600px;
-}
-
-.j-notes__eyebrow {
-	color: var(--color-accent);
-	font: 500 13px var(--font-mono);
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-.j-notes__demo .demo {
-	margin: 0;
-	padding: 20px;
-	border: 1px solid var(--color-border);
-	border-radius: 18px;
-	background: var(--color-bg-elevated);
 }
 
 /* ---- chapter rail ---- */

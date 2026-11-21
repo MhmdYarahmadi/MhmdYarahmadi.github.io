@@ -28,28 +28,19 @@ import "../../styles/rov.css";
 				</p>
 				<dl class="d-facts">
 					<div><dt>Envelope (CAD)</dt><dd>716 × 550 × 120 mm</dd></div>
-					<div><dt>Thrusters</dt><dd>6</dd></div>
 					<div><dt>Max depth</dt><dd>30 m</dd></div>
-					<div><dt>Control</dt><dd>Bluetooth controller</dd></div>
-						<div><dt>Surface app</dt><dd>Python + Qt</dd></div>
-						<div><dt>Thrusters</dt><dd>PID control</dd></div>
-					<div><dt>Link</dt><dd>UDP over Wi-Fi + tether</dd></div>
+					<div><dt>Thrusters</dt><dd>6, PID control</dd></div>
 					<div><dt>On board</dt><dd>Raspberry Pi 5 + ESP32</dd></div>
-					<div><dt>Camera</dt><dd>IP camera, front centre</dd></div>
-					<div><dt>Lights</dt><dd>2 LEDs, automatic</dd></div>
-					<div><dt>Leak sensor</dt><dd>Our own design</dd></div>
-					<div><dt>If it leaks</dt><dd>Surfaces by itself</dd></div>
+					<div><dt>Surface app</dt><dd>Python + Qt, Bluetooth controller</dd></div>
+					<div><dt>Link</dt><dd>UDP over Wi-Fi + tether</dd></div>
 				</dl>
 			</section>
 
 			<section class="d-sec" data-depth="12" data-cap="Camera · front centre, behind acrylic">
 				<h3>From the controller to the thrusters</h3>
 				<p class="d-muted">
-					A Python/Qt app on the laptop reads the controller and sends each command as a UDP
-					packet over Wi-Fi to the modem buoy, down the tether and through a switch inside the
-					ROV to a Raspberry Pi 5. The Pi decodes it and passes PWM values to the ESP32 over
-					serial, with PID control on the six thrusters. The camera's RTSP video rides the same
-					IP network back up to the app.
+					Each command leaves the laptop as a UDP packet and goes down the tether to the
+					Raspberry Pi 5 and the ESP32; the camera's RTSP video rides the same network back up.
 				</p>
 				<figure class="d-feed">
 					<div class="d-feed__frame">
@@ -97,8 +88,15 @@ import "../../styles/rov.css";
 					<article><h4>Network</h4><p>A modem buoy at the surface, the tether, and a switch inside the ROV make one IP network. Commands go down it and the camera's video comes back up.</p></article>
 					<article><h4>Raspberry Pi 5</h4><p>Receives the UDP commands, decodes them, and sends PWM values to the ESP32 over USB serial.</p></article>
 					<article><h4>ESP32</h4><p>Turns those values into the PWM signals that drive the six thrusters, with PID control and automatic motion functions.</p></article>
-					<article><h4>Leak sensor</h4><p>A sensor of our own design watches for water inside the hull. It reports to the Raspberry Pi 5, and on a leak the ROV surfaces by itself: a fail-safe that brings it home.</p></article>
 				</div>
+			</section>
+
+			<section class="d-sec" data-depth="30" data-cap="30 m · rated depth">
+				<h3>At 30 m, if water gets in</h3>
+				<p class="d-muted">
+					A leak sensor of our own design watches for water inside the hull. It reports to the
+					Raspberry Pi 5, and on a leak the ROV surfaces by itself: a fail-safe that brings it home.
+				</p>
 			</section>
 		</div>
 

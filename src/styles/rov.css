@@ -3,7 +3,6 @@
    src/scripts/deepDive.ts). The dive sets its own ocean colours, so it
    looks the same on any page; the spec sheet takes the page's --color-*
    and --d-* tokens. */
-@import "@fontsource-variable/sora";
 
 /* ROV: a spec sheet (the 3D model lives in the dive below) */
 .d-card-spec {
@@ -208,13 +207,13 @@
 }
 
 .d-sec h2 {
-	font: 700 clamp(44px, 6vw, 84px) / 1 "Sora Variable", var(--font-sans);
+	font: 700 clamp(44px, 6vw, 84px) / 1 var(--font-display);
 	letter-spacing: -0.04em;
 	text-shadow: 0 0 60px var(--d-glow-soft);
 }
 
 .d-sec h3 {
-	font: 600 clamp(30px, 3.6vw, 46px) / 1.08 "Sora Variable", var(--font-sans);
+	font: 600 clamp(30px, 3.6vw, 46px) / 1.08 var(--font-display);
 	letter-spacing: -0.03em;
 }
 
@@ -399,7 +398,7 @@
 }
 
 .d-work h4 {
-	font: 600 17px "Sora Variable", var(--font-sans);
+	font: 600 17px var(--font-display);
 	color: var(--hi);
 }
 

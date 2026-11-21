@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 // The dashboard speed-up, felt: the same small dashboard twice, loading in
-// 2000 ms (before) and 150 ms (after). A tab or Reload runs both at once,
-// with a live timer each; it also runs once by itself when scrolled into
-// view. Made-up data. Styles: journey.css (05 Web & Enterprise).
+// 2000 ms (before) and 150 ms (after). It opens on that result; a tab or
+// Reload runs both again at once, with a live timer each. Made-up data. Styles: journey.css (05 Web & Enterprise).
 
 const TABS = {
 	Sites: { kpi: "Visits this week", value: "4,812", bars: [40, 55, 48, 70, 62, 84] },
@@ -16,7 +15,8 @@ const BEFORE = 2000;
 const AFTER = 150;
 
 function Pane({ name, delay, run, tab, onDone }: { name: string; delay: number; run: number; tab: Tab; onDone: (ms: number) => void }) {
-	const [ms, setMs] = useState<number | null>(null);
+	// opens on the finished result, so it never reads as stuck at 0 ms
+	const [ms, setMs] = useState<number>(delay);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -50,8 +50,8 @@ function Pane({ name, delay, run, tab, onDone }: { name: string; delay: number; 
 		<section className={`lat__pane${loading ? " is-loading" : ""}`} aria-label={`${name}: loads in ${delay} ms`} aria-busy={loading}>
 			<header>
 				<span className="lat__name">{name}</span>
-				<span className="lat__ms" data-ms={ms ?? ""}>
-					{ms === null ? "–" : `${Math.round(ms).toLocaleString("en-US")} ms`}
+				<span className="lat__ms" data-ms={ms}>
+					{`${Math.round(ms).toLocaleString("en-US")} ms`}
 				</span>
 			</header>
 			{loading ? (
@@ -83,8 +83,7 @@ function Pane({ name, delay, run, tab, onDone }: { name: string; delay: number; 
 export default function LatencyDemo() {
 	const [tab, setTab] = useState<Tab>("Sites");
 	const [run, setRun] = useState(0);
-	const [took, setTook] = useState<{ before?: number; after?: number }>({});
-	const ref = useRef<HTMLDivElement>(null);
+	const [took, setTook] = useState<{ before?: number; after?: number }>({ before: BEFORE, after: AFTER });
 
 	const reload = (t: Tab = tab) => {
 		setTook({});
@@ -92,24 +91,10 @@ export default function LatencyDemo() {
 		setRun((r) => r + 1);
 	};
 
-	// run once by itself when it first comes into view
-	useEffect(() => {
-		const io = new IntersectionObserver(
-			([e]) => {
-				if (!e.isIntersecting) return;
-				io.disconnect();
-				setRun((r) => r || 1);
-			},
-			{ threshold: 0.5 },
-		);
-		io.observe(ref.current!);
-		return () => io.disconnect();
-	}, []);
-
 	const both = took.before !== undefined && took.after !== undefined;
 
 	return (
-		<div className="lat" ref={ref}>
+		<div className="lat">
 			<div className="dash__head">
 				<span>Overview</span>
 				<div className="dash__tabs" role="group" aria-label="Dashboard view, reloads both panes">
@@ -128,9 +113,7 @@ export default function LatencyDemo() {
 				<p aria-live="polite">
 					{both
 						? `Before: ${took.before!.toLocaleString("en-US")} ms. After: ${took.after} ms. Over 13× faster.`
-						: run
-							? "Loading…"
-							: "Same dashboard, before and after: 2 s down to 150 ms."}
+						: "Loading…"}
 					<span> Made-up data.</span>
 				</p>
 				<button type="button" className="lat__reload" onClick={() => reload()}>

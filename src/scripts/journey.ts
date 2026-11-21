@@ -41,7 +41,7 @@ const THEME: Record<string, [string, string, string]> = {
 	school: ["#ede7ff", "#ffd23f", "#120d24"],
 	drill: ["#dcebff", "#ff8a3d", "#0b2a4a"],
 	iot: ["#a7f3c0", "#a7f3c0", "#020604"],
-	web: ["#0f172a", "#0e7490", "#eef2f6"],
+	web: ["#e2e8f0", "#22b8cf", "#0b1220"],
 	plain: ["#e8edf2", "#00e5ff", "#05070a"],
 };
 
@@ -137,7 +137,8 @@ function update() {
 	for (const c of chapters) if (c.getBoundingClientRect().top <= mid) next = c;
 	if (next !== active) {
 		active?.classList.remove("on");
-		next.classList.add("on");
+		// seen: the copy reveals once and stays (journey.css)
+		next.classList.add("on", "seen");
 		active = next;
 		const world = next.dataset.world!;
 		for (const [name, layer] of layers) layer.classList.toggle("on", name === world);
@@ -145,12 +146,10 @@ function update() {
 		root.style.setProperty("--j-fg", fg);
 		root.style.setProperty("--j-acc", acc);
 		root.style.setProperty("--j-bg", bg);
-		// the backdrop's particles fade on the light world (journey.css)
-		root.dataset.jworld = world;
 		const id = next.id;
-		// Skills has no rail entry; it belongs with About. A world's notes
+		// A world's notes
 		// (#<world>-notes) belong with the world.
-		const railId = id === "skills" ? "about" : id.replace(/-notes$/, "");
+		const railId = id.replace(/-notes$/, "");
 		for (const a of railLinks) {
 			if (a.dataset.rail !== railId) {
 				a.removeAttribute("aria-current");

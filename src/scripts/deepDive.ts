@@ -192,6 +192,12 @@ function watch3d() {
 		statusEl.textContent = "Reduced motion: still image";
 		return;
 	}
+	// Data Saver (Chrome/Android): skip the ~1.1 MB of three.js and model
+	if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) {
+		stage.classList.add("fallback");
+		statusEl.textContent = "Data saver on: still image";
+		return;
+	}
 	watcher = new IntersectionObserver(([e]) => e.isIntersecting && load3d(), { rootMargin: "1200px 0px" });
 	watcher.observe(dive);
 }
