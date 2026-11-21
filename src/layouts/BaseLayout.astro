@@ -18,7 +18,7 @@ const {
 } = Astro.props;
 
 // Absolute URLs for link previews, from `site` in astro.config.mjs.
-const site = Astro.site ?? new URL("https://mhmdyarahmadi.github.io");
+const site = Astro.site ?? new URL("https://mohammadyarahmadi.ir");
 const canonical = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(url("/og.jpg"), site).href;
 const ogAlt = "Mohammad Yarahmadi, Embedded software · IoT · Web, beside his ROV over its own underwater camera footage";

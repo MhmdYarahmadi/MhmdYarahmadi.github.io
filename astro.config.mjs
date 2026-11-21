@@ -5,10 +5,9 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  // Served by GitHub Pages from the user-site repo (MhmdYarahmadi.github.io), so at
-  // the domain root. If the site ever moves into a subfolder (a repo with
-  // another name), set base to that folder, e.g. '/portfolio-website/'.
-  site: 'https://mhmdyarahmadi.github.io',
+  // Served at the domain root by Caddy on the VPS. If the site ever moves into
+  // a subfolder, set base to that folder, e.g. '/portfolio-website/'.
+  site: 'https://mohammadyarahmadi.ir',
   base: '/',
   integrations: [react()],
   // The site is one page now (src/pages/index.astro). The old pages send
