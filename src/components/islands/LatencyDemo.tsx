@@ -114,7 +114,6 @@ export default function LatencyDemo() {
 					{both
 						? `Before: ${took.before!.toLocaleString("en-US")} ms. After: ${took.after} ms. Over 13× faster.`
 						: "Loading…"}
-					<span> Made-up data.</span>
 				</p>
 				<button type="button" className="lat__reload" onClick={() => reload()}>
 					Reload
